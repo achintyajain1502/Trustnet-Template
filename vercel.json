@@ -1,0 +1,13 @@
+{
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" }
+  ],
+  "rewrites": [
+    { "source": "/pbl", "destination": "/pbl.html" },
+    { "source": "/advisory-board", "destination": "/advisory-board.html" },
+    { "source": "/call-for-papers", "destination": "/call-for-papers.html" },
+    { "source": "/guidelines", "destination": "/guidelines.html" },
+    { "source": "/proposal-guidelines", "destination": "/proposal-guidelines.html" },
+    { "source": "/registerhere", "destination": "/registerhere.html" }
+  ]
+}
