@@ -1,13 +1,8 @@
 {
-  "builds": [
-    { "src": "**/*.html", "use": "@vercel/static" }
-  ],
-  "rewrites": [
-    { "source": "/pbl", "destination": "/pbl.html" },
-    { "source": "/advisory-board", "destination": "/advisory-board.html" },
-    { "source": "/call-for-papers", "destination": "/call-for-papers.html" },
-    { "source": "/guidelines", "destination": "/guidelines.html" },
-    { "source": "/proposal-guidelines", "destination": "/proposal-guidelines.html" },
-    { "source": "/registerhere", "destination": "/registerhere.html" }
+  "version": 2,
+  "builds": [{ "src": "pbl.html", "use": "@vercel/static" }],
+  "routes": [
+    { "src": "/", "dest": "/pbl.html" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }
