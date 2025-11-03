@@ -125,14 +125,39 @@ ul.tracks li {
       line-height: 1.6;
     }
 	
+/* Default (desktop/laptop) */
 .top-right-logo {
   position: absolute;
   top: 20px;
   right: 250px;
-  height: 200px;
+  max-height: 200px;
   width: auto;
   z-index: 2;
 }
+
+/* For tablets and smaller devices */
+@media (max-width: 1024px) {
+  .top-right-logo {
+    right: 100px;
+    max-height: 160px;
+  }
+}
+
+/* For mobile screens */
+@media (max-width: 768px) {
+  .top-right-logo {
+    position: static; /* remove absolute positioning */
+    display: block;
+    margin: 20px auto 0 auto; /* center it below heading */
+    max-width: 80%;
+    height: auto;
+  }
+
+  .hero-banner {
+    padding-top: 60px;
+  }
+}
+
 
     /* Submission Section */
     .submission-section {
@@ -561,4 +586,5 @@ Select accepted and presented papers at the conference will be submitted for pub
 <h2>Publicity</h2><p>
 
 All articles submitted to the conference cannot be fully or partially publicised on any social media platform until an official acceptance email is received from the publisher. If any author(s) violate this act, their article will be rejected for presentation and removed from the proceeding for publication.</p>
+
 
