@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    /* Base Reset */
+    /* ---------- BASE RESET ---------- */
     body, h1, h2, p, a, ul, li {
       margin: 0;
       padding: 0;
@@ -16,13 +16,14 @@
       box-sizing: border-box;
     }
 
-    /* ----------- TOP LOGO BAR ----------- */
+    /* ---------- TOP LOGO BAR ---------- */
     .top-logos {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 40px;
+      padding: 8px 5%;
       background-color: white;
+      flex-wrap: wrap;
     }
 
     .top-logos img {
@@ -32,16 +33,18 @@
 
     .right-logos {
       display: flex;
-      align-items: right;
-      gap: 20px;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 25px;
+      flex-wrap: wrap;
     }
 
     .right-logos img {
-      height: 35px;
+      height: 40px;
       width: auto;
     }
 
-    /* ----------- NAVBAR ----------- */
+    /* ---------- NAVBAR ---------- */
     .navbar {
       display: flex;
       align-items: center;
@@ -71,7 +74,7 @@
       opacity: 0.8;
     }
 
-    /* Hamburger for mobile */
+    /* ---------- HAMBURGER MENU ---------- */
     .menu-toggle {
       display: none;
       position: absolute;
@@ -105,14 +108,13 @@
       }
     }
 
-    /* ----------- HERO SECTION ----------- */
+    /* ---------- HERO SECTION ---------- */
     .hero-banner {
       background: url('hero-area.jpg') center center / cover no-repeat;
       padding: 100px 20px;
       text-align: center;
       color: white;
       position: relative;
-      overflow: hidden;
     }
 
     .hero-banner h1 {
@@ -124,8 +126,8 @@
     .top-right-logo {
       position: absolute;
       top: 20px;
-      right: 180px;
-      height: 180px;
+      right: 5%;
+      height: 160px;
       width: auto;
       z-index: 2;
     }
@@ -143,7 +145,7 @@
       }
     }
 
-    /* ----------- MAIN CONTENT ----------- */
+    /* ---------- MAIN CONTENT ---------- */
     .main {
       max-width: 80%;
       margin: 60px auto;
@@ -156,6 +158,7 @@
       font-size: 28px;
       color: #1f1f1f;
       margin-bottom: 20px;
+      text-align: justify;
     }
 
     ul.tracks {
@@ -170,7 +173,7 @@
       font-size: 15px;
     }
 
-    /* Responsive Adjustments */
+    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 768px) {
       .main {
         width: 90%;
@@ -200,12 +203,11 @@
         font-size: 13.5px;
       }
     }
-
   </style>
 </head>
 
 <body>
-  <!-- Top Logos -->
+  <!-- === TOP LOGOS === -->
   <nav class="top-logos">
     <img src="./muj.png" alt="MUJ">
     <div class="right-logos">
@@ -214,7 +216,7 @@
     </div>
   </nav>
 
-  <!-- Navbar -->
+  <!-- === NAVBAR === -->
   <nav class="navbar">
     <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
     <ul class="nav-links" id="navLinks">
@@ -232,13 +234,13 @@
     </ul>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- === HERO SECTION === -->
   <section class="hero-banner">
     <h1>Advisory Board</h1>
     <img src="./trust.png" alt="TrustNet Logo" class="top-right-logo">
   </section>
 
-  <!-- Main Content -->
+  <!-- === MAIN CONTENT === -->
   <section class="main">
     <h1><u>International Advisory Board</u></h1>
     <ul class="tracks">
@@ -311,4 +313,3 @@
   </script>
 </body>
 </html>
-
