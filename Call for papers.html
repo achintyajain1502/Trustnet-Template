@@ -4,8 +4,8 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Call for Papers</title>
- <link rel="stylesheet" href="styles.css">
  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
  <style>
 /* ========== BASE RESET ========== */
@@ -17,7 +17,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden; /* Prevents horizontal scroll */
+  overflow-x: hidden;
 }
 
 /* ========== HEADER LOGOS ========== */
@@ -40,28 +40,29 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  }
+}
 
 /* ========== NAVBAR ========== */
 .navbar {
   display: flex;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
   background: linear-gradient(to right, #2f6ec2, #6da9e9);
-  padding: 12px 10px;
+  padding: 12px 25px;
+  position: relative;
 }
 
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
   list-style: none;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
-  color: white;
   text-decoration: none;
+  color: white;
   font-weight: 600;
   font-size: 15px;
   transition: opacity 0.2s;
@@ -69,6 +70,40 @@ body {
 
 .nav-links a:hover {
   opacity: 0.8;
+}
+
+/* ======== HAMBURGER MENU ======== */
+.menu-toggle {
+  display: none;
+  position: absolute;
+  left: 20px;
+  font-size: 26px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ======== MOBILE NAVBAR ======== */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #2f6ec2, #6da9e9);
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    z-index: 10;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 }
 
 /* ========== HERO SECTION ========== */
@@ -98,7 +133,6 @@ body {
   right: 5%;
   max-height: 120px;
   width: auto;
-  
 }
 
 @media (max-width: 768px) {
@@ -107,6 +141,10 @@ body {
     display: block;
     margin: 20px auto 0;
     max-height: 80px;
+  }
+
+  .hero-banner {
+    padding: 60px 10px;
   }
 }
 
@@ -239,43 +277,9 @@ ul.tracks li {
   height: 80px;
   width: auto;
 }
-
-/* ========== MEDIA QUERIES ========== */
-@media (max-width: 992px) {
-  .timeline {
-    gap: 25px;
-  }
-  .navbar {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .submission-container {
-    padding: 25px 15px;
-  }
-  .timeline {
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero-banner {
-    padding: 60px 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-links a {
-    font-size: 14px;
-  }
-  .top-logos img {
-    height: 50px;
-  }
-  .timeline-item h4 {
-    font-size: 1rem;
-  }
-}
 </style>
 </head>
+
 <body>
 <!-- === HEADER & NAV === -->
 <nav class="top-logos">
@@ -287,7 +291,8 @@ ul.tracks li {
 </nav>
 
 <nav class="navbar">
-  <ul class="nav-links">
+  <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="pbl.html#Home">Home</a></li>
     <li><a href="pbl.html#About">About</a></li>
     <li><a href="Call for papers.html">Call for Papers</a></li>
@@ -386,11 +391,7 @@ ul.tracks li {
   </ul>
 </section>
 
-<img 
-  src="./trustnet-brochure.webp" 
-  alt="TrustNet 2026 Brochure" 
-  class="trustnet-banner" 
-  loading="lazy">
+<img src="./trustnet-brochure.webp" alt="TrustNet 2026 Brochure" class="trustnet-banner" loading="lazy">
 
 <section class="main">
   <div class="content">
@@ -407,12 +408,11 @@ ul.tracks li {
   </div>
 </section>
 
- <script>
+<script>
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("show");
 }
 </script>
+
 </body>
 </html>
-
-
