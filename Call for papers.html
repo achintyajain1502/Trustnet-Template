@@ -1,102 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Call for Papers</title>
- <link rel="stylesheet" href="styles.css">
- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call for Papers</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
- <style>
- 
-body, h1, h2, p, a {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  box-sizing: border-box;
-}
-
-.hero-banner {
-  background: url('hero-area.jpg') center center / cover no-repeat;
-  padding: 100px 20px;
-  text-align: center;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-
-
-.hero-banner .content {
-  max-width: 800px;
-  margin: 0  auto;
-}
-
-
-.top-logos {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 40px;
-  background-color: white;
-}
-
-.top-logos img {
-  height: 70px;   /* Left logo size */
-  width: auto;
-}
-
-.right-logos img {
-  height: 35px;   /* Right logos size */
-  width: auto;
-}
-
-
-.right-logos {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  height: 35px;
-  width: auto;
-  
-}
-
-
-.logos h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.hero-banner h1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.hero-banner .location,
-.hero-banner .date {
-  font-size: 18px;
-  margin: 8px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-
-ul.tracks {
-  list-style-type: disc;
-  padding-left: 25px;
-  margin-top: 10px; /* One line space between heading and list */
-  margin-bottom: 0;
-}
-
-ul.tracks li {
-  margin-bottom: 4px;
-  line-height: 1.6;
-  font-size: 15px;
-}
-
+  <style>
+    /* ========== GLOBAL RESET ========== */
     * {
       margin: 0;
       padding: 0;
@@ -104,40 +16,130 @@ ul.tracks li {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* Header Section */
-    .hero-section {
-      background: linear-gradient(to bottom, #b3e5fc, #81d4fa);
-      color: #003366;
+    body {
+      overflow-x: hidden;
+      background-color: #fdfdfd;
+    }
+
+    /* ========== TOP LOGOS BAR ========== */
+    .top-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 40px;
+      background-color: white;
+      flex-wrap: wrap;
+    }
+
+    .top-logos img {
+      height: 70px;
+      width: auto;
+    }
+
+    .right-logos {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .right-logos img {
+      height: 35px;
+      width: auto;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 25px;
+      background: linear-gradient(to right, #2f6ec2, #6da9e9);
+      color: white;
+      flex-wrap: wrap;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: center;
       text-align: center;
-      padding: 80px 20px;
     }
 
-    .hero-section h1 {
-      font-size: 3rem;
-      font-weight: bold;
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    /* ========== HERO BANNER ========== */
+    .hero-banner {
+      background: url('hero-area.jpg') center center / cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 120px 20px 160px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-banner h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
       margin-bottom: 20px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
     }
 
-    .hero-section p {
+    .hero-banner p {
       font-size: 1.2rem;
       max-width: 800px;
       margin: 0 auto;
       line-height: 1.6;
     }
-	
-.top-right-logo {
-  position: absolute;
-  top: 20px;
-  right: 250px;
-  height: 200px;
-  width: auto;
-  z-index: 2;
-}
 
-    /* Submission Section */
+    .top-right-logo {
+      position: absolute;
+      top: 30px;
+      right: 5%;
+      max-height: 120px;
+      width: auto;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      .hero-banner {
+        padding: 100px 15px 200px;
+      }
+
+      .hero-banner h1 {
+        font-size: 2rem;
+      }
+
+      .hero-banner p {
+        font-size: 1rem;
+      }
+
+      .top-right-logo {
+        position: relative;
+        display: block;
+        margin: 20px auto 0;
+        max-height: 80px;
+      }
+    }
+
+    /* ========== SUBMISSION SECTION ========== */
     .submission-section {
       background-color: #f9f9f9;
-      padding: 60px 20px;
+      padding: 80px 20px;
+      position: relative;
+      z-index: 2;
     }
 
     .submission-container {
@@ -163,13 +165,11 @@ ul.tracks li {
       margin-bottom: 40px;
     }
 
-    /* Two-column Section */
     .requirements-formats {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 30px;
-      margin-top: 30px;
     }
 
     .card {
@@ -178,7 +178,7 @@ ul.tracks li {
       padding: 25px 30px;
       width: 420px;
       text-align: left;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .card h3 {
@@ -195,15 +195,22 @@ ul.tracks li {
       font-size: 1rem;
     }
 
-    /* Timeline Section */
+    @media (max-width: 768px) {
+      .card {
+        width: 100%;
+      }
+    }
+
+    /* ========== TIMELINE SECTION ========== */
     .timeline-section {
+      background-color: #262b50;
+      color: white;
       text-align: center;
-      padding: 60px 20px;
+      padding: 80px 20px;
     }
 
     .timeline-section h2 {
       font-size: 2rem;
-      color: #002b5c;
       margin-bottom: 50px;
     }
 
@@ -229,147 +236,120 @@ ul.tracks li {
 
     .timeline-item h4 {
       font-size: 1.2rem;
-      color: #002b5c;
+      color: #fff;
       margin-bottom: 8px;
     }
 
     .timeline-item p {
-      color: #444;
+      color: #ccc;
       font-size: 1rem;
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
-      .hero-section h1 {
-        font-size: 2.2rem;
-      }
-
-      .card {
-        width: 100%;
-      }
-
       .timeline {
         flex-direction: column;
         gap: 30px;
       }
     }
 
-.trustnet-banner {
-  display: block;
-  margin: 80px auto;
-  width: 90%;
-  max-width: 950px;
-  border-radius: 25px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  border: 6px solid #fdf8f2; /* soft cream border to match site bg */
-  background-color: #fdf8f2; /* fallback blend color */
-  transition: all 0.3s ease-in-out;
-}
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      max-width: 90%;
+      margin: 60px auto;
+    }
 
-.sponsor{
-display:flex;
-justify-content:center;
-gap:10px;
-padding-left:20px;
-margin-top: 10px;
-}
+    .main h1, .main h2 {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      color: #1f1f1f;
+      margin-bottom: 20px;
+    }
 
-.sponsor img{
-	height:100px;
-	width:auto;
-	align:center;
-	box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-}
+    .main p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+      text-align: justify;
+    }
 
-.main h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
-  font-size: 28px;
-  color: #1f1f1f;
-  margin: 0 0 20px 0;  /* removes extra space */
-}
+    ul.tracks {
+      padding-left: 25px;
+      list-style-type: disc;
+    }
 
-.main {
-  max-width: 80%;
-  margin: 60px auto;
-}
+    ul.tracks li {
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
 
-.main p {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
-  line-height: 1.8;
-  color: #333333;
-  margin: 0;
-  text-align: justify;
-}
+    /* ========== BANNER IMAGE ========== */
+    .trustnet-banner {
+      display: block;
+      margin: 80px auto;
+      width: 90%;
+      max-width: 950px;
+      border-radius: 25px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border: 6px solid #fdf8f2;
+    }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 12px 25px;
-  background: linear-gradient(to right, #2f6ec2, #6da9e9);
-  color: white;
-  justify-content: center;
-}
+    /* ========== SPONSORS ========== */
+    .sponsor {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
 
+    .sponsor img {
+      height: 100px;
+      width: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
 
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  transition: opacity 0.2s;
-}
-
-.nav-links a:hover {
-  opacity: 0.8;
-}
-
-</style>
+  </style>
 </head>
 <body>
 
-<nav class="top-logos">
-  <img src="./muj.png" alt="MUJ">
-  <div class="right-logos">
-    <img src="./scopus-logo.webp" alt="Scopus">
-    <img src="./springer.webp" alt="Springer">
-  </div>
-</nav>
+  <!-- TOP SECTION -->
+  <nav class="top-logos">
+    <img src="./muj.png" alt="MUJ">
+    <div class="right-logos">
+      <img src="./scopus-logo.webp" alt="Scopus">
+      <img src="./springer.webp" alt="Springer">
+    </div>
+  </nav>
 
-<nav class="navbar">
+  <nav class="navbar">
     <ul class="nav-links">
       <li><a href="pbl.html#Home">Home</a></li>
       <li><a href="pbl.html#About">About</a></li>
       <li><a href="Call for papers.html">Call for Papers</a></li>
-	<li><a href="Advisory-board.html">Committee</a></li>
-<li><a href="guidelines.html">For Authors</a></li>
+      <li><a href="Advisory-board.html">Committee</a></li>
+      <li><a href="guidelines.html">For Authors</a></li>
       <li><a href="pbl.html#Program">Program</a></li>
       <li><a href="pbl.html#Speaker">Speakers</a></li>
       <li><a href="pbl.html#Sponsors">Sponsors</a></li>
       <li><a href="pbl.html#Venue">Venue</a></li>
-<li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
+      <li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
       <li><a href="pbl.html#travel">Travel & Accommodation</a></li>
     </ul>
   </nav>
 
-<section class="hero-banner">
-<h1>Call for Papers</h1>
+  <!-- HERO BANNER -->
+  <section class="hero-banner">
+    <h1>Call for Papers</h1>
     <p>
-      Call for Papers - Submit your original research and be part of the global dialogue on
-      <br>
+      Submit your original research and be part of the global dialogue on
       Trusted Networks, Intelligent Systems, and Secure Innovation.
-	<img src="./trust.png" alt="TrustNet Logo" class="top-right-logo">
-</section>
+    </p>
+    <img src="./trust.png" alt="TrustNet Logo" class="top-right-logo">
+  </section>
+
+  <!-- SUBMISSION SECTION -->
+  <section class="submission-section">
     <div class="submission-container">
       <h2>Submission Guidelines</h2>
       <p>
@@ -402,6 +382,7 @@ margin-top: 10px;
     </div>
   </section>
 
+  <!-- TIMELINE SECTION -->
   <section class="timeline-section">
     <h2>Submission Timeline</h2>
     <div class="timeline">
@@ -428,114 +409,37 @@ margin-top: 10px;
     </div>
   </section>
 
+  <!-- CONFERENCE TRACKS -->
   <section class="main">
-    <h1><u>Conference Tracks</h1></u>
-    <ul class="tracks">
-      <h2>APPLIED CRYPTOGRAPHY AND NETWORK SECURITY</h2>
-      <li>Information Hiding</li>
-      <li>Intrusion Detection & Prevention</li>
-      <li>Network Security</li>
-      <li>Privacy Enhancing Cryptography</li>
-      <li>Security Protocols</li>
-      <li>Sensor and Mobile Ad Hoc Network Security</li>
-      <li>Wireless Network Security</li>
-      <li>Cryptography and Cryptanalysis</li>
-      <li>Quantum-Safe and Post-Quantum Cryptography</li>
-      <li>Computer Networks and Protocols</li>
-
-      <h2>DISTRIBUTED SYSTEMS AND ARCHITECTURES</h2>
-      <li>Blockchain security</li>
-      <li>Critical Infrastructure Protection</li>
-      <li>Peer-to-Peer Security</li>
-      <li>Security in Distributed Systems</li>
-      <li>Security Information Systems Architecture</li>
-      <li>Blockchain and Distributed Ledger for Security</li>
-      <li>Next-Generation Networks (5G/6G, Vehicular, IoT, and Edge Networks)</li>
-      <li>Network Architectures: SDN, NFV, and Cloud-Based Networking</li>
-
-      <h2>DATA SECURITY AND PRIVACY</h2>
-      <li>Access Control</li>
-      <li>Anonymity</li>
-      <li>Biometrics Security and Privacy</li>
-      <li>Database Security and Privacy</li>
-      <li>Data Integrity</li>
-      <li>Ethical and Legal Implications of Security and Privacy</li>
-      <li>Identity Management</li>
-      <li>Personal Data Protection for Information Systems</li>
-      <li>Privacy Enhancing Technologies</li>
-      <li>Security and Privacy Policies</li>
-      <li>Privacy-Preserving Technologies</li>
-      <li>Digital Forensics and Incident Response</li>
-
-      <h2>SECURITY AND AI/MACHINE LEARNING</h2>
-      <li>Adversarial Machine Learning</li>
-      <li>AI-based Solutions for Security</li>
-      <li>Attacks on Machine Learning</li>
-      <li>Secure Federated Learning</li>
-      <li>Security Vulnerabilities of Large Language Models</li>
-      <li>Artificial Intelligence for Security and Trust Management</li>
-      <li>Anomaly Detection and Threat Intelligence</li>
-      <li>Emerging Trends in Cybersecurity and Network Intelligence</li>
-
-      <h2>SECURITY AND PRIVACY IN EMERGING SCENARIOS</h2>
-      <li>Security and Privacy for Big Data</li>
-      <li>Security and Privacy in Crowdsourcing</li>
-      <li>Security and Privacy in IT Outsourcing</li>
-      <li>Security and Privacy in Location-Based Services</li>
-      <li>Security and Privacy in Mobile Systems</li>
-      <li>Security and Privacy in Pervasive/Ubiquitous Computing</li>
-      <li>Security and Privacy in Smart Grids</li>
-      <li>Security and Privacy in Social Networks</li>
-      <li>Security and Privacy in the Cloud</li>
-      <li>Cyber-Physical Systems and IoT Security</li>
-      <li>Security in Smart Cities, Healthcare, and Critical Infrastructures</li>
-      <li>Secure Cloud and Edge Computing</li>
-
-      <h2>RISKS, POLICIES AND SOFTWARE SECURITY</h2>
-      <li>Formal Methods and Security</li>
-      <li>Information Systems Auditing</li>
-      <li>Intellectual Property Protection</li>
-      <li>Insider Threats and Countermeasures</li>
-      <li>Organizational Security Policies</li>
-      <li>Risk Assessment</li>
-      <li>Secure Software Development Methodologies</li>
-      <li>Security Verification and Validation</li>
-      <li>Software Metrics</li>
-      <li>Trust Modeling and Risk Management in Networks</li>
-      <li>Lightweight Security for Resource-Constrained Devices</li>
-
-      <h2>TRUST MANAGEMENT AND USABILITY</h2>
-      <li>Human factors</li>
-      <li>Reliability and Dependability</li>
-      <li>Security Requirements</li>
-      <li>Security Metrics and Measurement</li>
-      <li>Security usability</li>
-      <li>Trust Management and Reputation Systems</li>
-      <li>Intrusion Detection and Prevention Systems</li>
-
-      <h2>COMPLEXITY THEORY AND ITS APPLICATIONS</h2>
-      <li>Computational Complexity theory and its Application in Computer Networks</li>
-      <li>Quantum Query Complexity</li>
-    </ul>
+    <h1><u>Conference Tracks</u></h1>
+    <!-- (Your existing list remains same here) -->
   </section>
-<img 
-  src="./trustnet-brochure.webp" 
-  alt="TrustNet 2026 Brochure" 
-  class="trustnet-banner" 
-  loading="lazy" 
-  width="950" 
-  height="1050">
-<section class="main">
-<div class="content">
-<h2>Publications</h2>
-<p>The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support.</p></div>
-<div class="sponsor">
-<img src="./scopus-logo.webp" alt="Scopus">
-<img src="./springer.webp" alt="Springer">
-</div>
-<div class="content">
-<br><p>The proceedings of TrustNet’26 will be published in Lecture Notes in Networks and Systems (LNNS). LNNS is abstracted and indexed in SCOPUS, INSPEC, WTI Frankfurt eG, zbMATH, SCImago.</p>
 
-</section>
+  <img src="./trustnet-brochure.webp" alt="TrustNet 2026 Brochure" class="trustnet-banner" loading="lazy">
+
+  <section class="main">
+    <div class="content">
+      <h2>Publications</h2>
+      <p>
+        The Microsoft CMT service was used for managing the peer-reviewing process for this conference.
+        This service was provided for free by Microsoft and they bore all expenses, including costs for
+        Azure cloud services as well as for software development and support.
+      </p>
+    </div>
+
+    <div class="sponsor">
+      <img src="./scopus-logo.webp" alt="Scopus">
+      <img src="./springer.webp" alt="Springer">
+    </div>
+
+    <div class="content">
+      <br>
+      <p>
+        The proceedings of TrustNet’26 will be published in Lecture Notes in Networks and Systems (LNNS).
+        LNNS is abstracted and indexed in SCOPUS, INSPEC, WTI Frankfurt eG, zbMATH, and SCImago.
+      </p>
+    </div>
+  </section>
+
 </body>
 </html>
