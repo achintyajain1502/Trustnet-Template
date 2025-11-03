@@ -75,8 +75,9 @@
       background: url('hero-area.jpg') center center / cover no-repeat;
       color: white;
       text-align: center;
-      padding: 100px 20px 80px;
+      padding: 100px 20px 150px; /* ✅ added more bottom padding */
       position: relative;
+      z-index: 1;
     }
 
     .hero-banner .top-right-logo {
@@ -115,7 +116,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    /* Date Box */
+    /* Important Dates (Fixed Overlap Section) */
     .date-box {
       display: flex;
       flex-wrap: wrap;
@@ -124,9 +125,11 @@
       background: #2b3260;
       padding: 25px;
       border-radius: 12px;
-      margin: -50px auto 30px;
+      margin: -40px auto 30px; /* ✅ slightly reduced negative margin */
       max-width: 900px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2; /* ✅ ensures it appears above background but not overlapped */
     }
 
     .event-box {
@@ -266,6 +269,9 @@
       .event-box {
         min-width: 130px;
       }
+      .date-box {
+        margin-top: 0; /* ✅ prevents too much upward pull */
+      }
       .top-logos img {
         height: 50px;
       }
@@ -273,7 +279,7 @@
 
     @media (max-width: 480px) {
       .hero-banner {
-        padding: 60px 10px;
+        padding: 70px 10px 180px; /* ✅ more bottom padding for small screens */
       }
       .hero-banner .top-right-logo {
         max-height: 70px;
@@ -340,7 +346,7 @@
   <section class="main">
     <div class="content">
       <h2 id="Home">International Conference On Trusted Networks and Intelligent Systems 2025</h2>
-      <p>The Department of Computer Science and Engineering, Manipal University Jaipur, is pleased to announce the International Conference on Trusted Networks and Intelligent Systems (TrustNet 2026) on February 16–17, 2026...</p>
+      <p>The Department of Computer Science and Engineering, Manipal University Jaipur, is pleased to announce the International Conference on Trusted Networks and Intelligent Systems (TrustNet 2026)...</p>
 
       <h2 id="About">About The Conference</h2>
       <p>Established in 2011, Manipal University Jaipur (MUJ) is a proud member of the globally acclaimed Manipal Group...</p>
