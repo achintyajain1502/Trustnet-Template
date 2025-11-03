@@ -1,30 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Special Session Proposal Guidelines</title>
- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Session Proposal Guidelines</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
- <style>
-/* ==========================
-   BASE
-========================== */
-body, h1, h2, p, a {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  box-sizing: border-box;
-}
-
+<style>
+/* ---------- Base ---------- */
 body {
-  overflow-x: hidden;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ==========================
-   LOGOS HEADER
-========================== */
+/* ---------- Top Logo Bar ---------- */
 .top-logos {
   display: flex;
   justify-content: space-between;
@@ -44,79 +36,30 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex-wrap: wrap;
 }
 
-/* ==========================
-   NAVBAR
-========================== */
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(to right, #2f6ec2, #6da9e9);
-  padding: 12px 25px;
-  position: relative;
-}
-
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 25px;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  transition: opacity 0.2s;
-}
-
-.nav-links a:hover {
-  opacity: 0.8;
-}
-
-/* ==========================
-   SIDEBAR (MOBILE)
-========================== */
-.menu-toggle {
-  display: none;
-  position: absolute;
-  left: 20px;
-  font-size: 26px;
-  color: white;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
+/* ---------- Sidebar Navigation ---------- */
 .sidebar {
+  width: 240px;
+  background: linear-gradient(to bottom, #2f6ec2, #6da9e9);
   position: fixed;
   top: 0;
-  left: -100%;
-  width: 250px;
-  height: 100%;
-  background: linear-gradient(to bottom, #2f6ec2, #6da9e9);
-  transition: left 0.3s ease;
-  padding-top: 80px;
-  z-index: 1000;
-}
-
-.sidebar.show {
   left: 0;
+  height: 100%;
+  padding-top: 100px;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
   padding: 15px 25px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar a {
@@ -127,12 +70,16 @@ body {
 }
 
 .sidebar a:hover {
-  opacity: 0.8;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
 }
 
-/* ==========================
-   HERO SECTION
-========================== */
+/* ---------- Content Section ---------- */
+.content {
+  margin-left: 240px;
+  padding: 20px 40px;
+}
+
 .hero-banner {
   background: url('hero-area.jpg') center center / cover no-repeat;
   padding: 120px 20px 80px;
@@ -145,105 +92,68 @@ body {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 25px;
-  z-index: 1;
-  position: relative;
 }
 
 .hero-logo {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 }
 
 .hero-logo img {
   width: 200px;
   height: auto;
-  max-width: 40%;
 }
 
-/* ==========================
-   MAIN CONTENT
-========================== */
+/* ---------- Main Section ---------- */
 .main {
-  max-width: 85%;
-  margin: 60px auto;
+  max-width: 90%;
+  margin: 50px auto;
 }
 
 .main h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 700;
   font-size: 28px;
-  color: #1f1f1f;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
-.main p {
+.main p, .main li {
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.7;
   color: #333;
-  margin-bottom: 20px;
-  text-align: justify;
 }
 
 .main-list {
   padding-left: 30px;
-  font-size: 16px;
-  line-height: 1.8;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.main-list > li {
-  margin-bottom: 18px;
 }
 
 .nested-list {
   padding-left: 25px;
-  margin-top: 8px;
-  margin-bottom: 12px;
-  font-size: 15px;
-  line-height: 1.7;
-  color: #444;
 }
 
-.nested-list > li {
-  margin-bottom: 8px;
-}
-
-.important-dates {
-  padding-left: 30px;
-  font-size: 16px;
-  line-height: 1.8;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  color: #333;
-}
-
-.important-dates > li {
-  margin-bottom: 10px;
-}
-
-/* ==========================
-   RESPONSIVE FIXES
-========================== */
+/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .nav-links {
-    display: none;
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 0;
   }
 
-  .menu-toggle {
-    display: block;
-  }
-
-  .navbar {
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
   }
-}
 
-@media (max-width: 768px) {
-  .hero-banner {
-    padding: 80px 15px 60px;
+  .sidebar li {
+    border-bottom: none;
+    padding: 10px 15px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 20px;
   }
 
   .hero-banner h1 {
@@ -253,59 +163,23 @@ body {
   .hero-logo img {
     width: 150px;
   }
-
-  .main {
-    max-width: 95%;
-    margin: 40px auto;
-  }
 }
-
-@media (max-width: 480px) {
-  .hero-banner h1 {
-    font-size: 22px;
-  }
-
-  .hero-logo img {
-    width: 120px;
-  }
-
-  .main-list, .nested-list, .important-dates {
-    padding-left: 20px;
-  }
-}
- </style>
+</style>
 </head>
 
 <body>
-<!-- TOP LOGOS -->
-<nav class="top-logos">
+
+<!-- Top Logos -->
+<div class="top-logos">
   <img src="./muj.png" alt="MUJ">
   <div class="right-logos">
     <img src="./scopus-logo.webp" alt="Scopus">
     <img src="./springer.webp" alt="Springer">
   </div>
-</nav>
+</div>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-  <ul class="nav-links">
-    <li><a href="pbl.html#Home">Home</a></li>
-    <li><a href="pbl.html#About">About</a></li>
-    <li><a href="Call for papers.html">Call for Papers</a></li>
-    <li><a href="Advisory-board.html">Committee</a></li>
-    <li><a href="guidelines.html">For Authors</a></li>
-    <li><a href="pbl.html#Program">Program</a></li>
-    <li><a href="pbl.html#Speaker">Speakers</a></li>
-    <li><a href="pbl.html#Sponsors">Sponsors</a></li>
-    <li><a href="pbl.html#Venue">Venue</a></li>
-    <li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
-    <li><a href="pbl.html#travel">Travel & Accommodation</a></li>
-  </ul>
-</nav>
-
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+<!-- Sidebar Navigation -->
+<nav class="sidebar">
   <ul>
     <li><a href="pbl.html#Home">Home</a></li>
     <li><a href="pbl.html#About">About</a></li>
@@ -319,59 +193,54 @@ body {
     <li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
     <li><a href="pbl.html#travel">Travel & Accommodation</a></li>
   </ul>
+</nav>
+
+<!-- Main Content -->
+<div class="content">
+  <section class="hero-banner">
+    <h1>Guidelines for Authors</h1>
+    <div class="hero-logo">
+      <img src="./trust.png" alt="TrustNet Logo">
+    </div>
+  </section>
+
+  <section class="main">
+    <ol class="main-list">
+      <li>All Special Sessions will be held at the conference venue or online.
+        <ol type="a" class="nested-list">
+          <li>To conduct a special session, the organizer must send a proposal containing:
+            <ol type="a" class="nested-list">
+              <li>Aim & Scope/ Objectives</li>
+              <li>Sub-topics of interest</li>
+              <li>Contact information of the Organizer</li>
+              <li>Organizers' short biography</li>
+              <li>List of potential reviewers/ TPC members</li>
+              <li>Tentative number of paper submissions</li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>Proposals will be evaluated by the TrustNet'26 Technical Committee and results shared via email.</li>
+      <li>Organizers are encouraged to publicize Calls for Papers. Details of accepted sessions will appear on the conference website (<a href="https://trustnetcon.in/" target="_blank">https://trustnetcon.in/</a>).</li>
+      <li>Each paper requires at least two qualified reviews by the session organizers.</li>
+      <li>Final decision will be taken by the Technical Committee after a third review.</li>
+      <li>Acceptance rate and similarity index must be ≤30% and ≤15%, respectively.</li>
+      <li>Minimum 5 accepted papers required per session; otherwise, sessions may be merged.</li>
+    </ol>
+
+    <p><strong>Important dates:</strong></p>
+    <ul>
+      <li>Notification of acceptance: At the earliest</li>
+      <li>Full-length paper submission and registration: As per Conference Timeline</li>
+    </ul>
+
+    <p>The special session will be organized through online mode only.</p>
+    <p>Warm regards,<br>
+      <strong>Team TrustNet'26</strong><br>
+      Manipal University Jaipur<br>
+      Email: <a href="mailto:trustnet2026@gmail.com">trustnet2026@gmail.com</a></p>
+  </section>
 </div>
-
-<!-- HERO SECTION -->
-<section class="hero-banner">
-  <h1>Guidelines for Authors</h1>
-  <div class="hero-logo">
-    <img src="./trust.png" alt="TrustNet Logo">
-  </div>
-</section>
-
-<!-- MAIN CONTENT -->
-<section class="main">
-  <ol class="main-list">
-    <li>All Special Sessions will be held at the conference venue or online.
-      <ol type="a" class="nested-list">
-        <li>To conduct a special session, the organizer must send a proposal containing:
-          <ol type="a" class="nested-list">
-            <li>Aim & Scope/ Objectives</li>
-            <li>Sub-topics of interest</li>
-            <li>Contact information of the Organizer</li>
-            <li>Organizers' short biography</li>
-            <li>List of potential reviewers/ TPC members</li>
-            <li>Tentative number of paper submissions</li>
-          </ol>
-        </li>
-      </ol>
-    </li>
-    <li>Proposals will be evaluated by the TrustNet'26 Technical Committee and results shared via email.</li>
-    <li>Organizers are encouraged to publicize Calls for Papers. Details of accepted sessions will appear on the conference website (<a href="https://trustnetcon.in/" target="_blank">https://trustnetcon.in/</a>).</li>
-    <li>Each paper requires at least two qualified reviews by the session organizers.</li>
-    <li>Final decision will be taken by the Technical Committee after a third review.</li>
-    <li>Acceptance rate and similarity index must be ≤30% and ≤15%, respectively.</li>
-    <li>Minimum 5 accepted papers required per session; otherwise, sessions may be merged.</li>
-  </ol>
-
-  <p><strong>Important dates:</strong></p>
-  <ul class="important-dates">
-    <li>Notification of acceptance: At the earliest</li>
-    <li>Full-length paper submission and registration: As per Conference Timeline</li>
-  </ul>
-
-  <p>The special session will be organized through online mode only.</p>
-  <p>Warm regards,<br>
-  <strong>Team TrustNet'26</strong><br>
-  Manipal University Jaipur<br>
-  Email: <a href="mailto:trustnet2026@gmail.com">trustnet2026@gmail.com</a></p>
-</section>
-
-<script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("show");
-}
-</script>
 
 </body>
 </html>
