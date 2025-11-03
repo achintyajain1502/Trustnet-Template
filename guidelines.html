@@ -548,6 +548,104 @@ body {
     justify-content: center;
   }
 }
+	/* ---------- Force-centered hero + logo (override) ---------- */
+
+/* Ensure no earlier absolute positioning interferes */
+.hero-banner, .hero-banner * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Main hero container: center vertically & horizontally */
+.hero-banner {
+  background: url('hero-area.jpg') center center / cover no-repeat !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 24px !important;                /* spacing between title and logo */
+  padding: 80px 18px !important;       /* shrinkable padding */
+  min-height: 260px;                   /* ensures visible area on phones */
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Hero title */
+.hero-banner h1 {
+  margin: 0 !important;
+  line-height: 1.05 !important;
+  font-size: clamp(22px, 6vw, 36px) !important; /* scales from phone→desktop */
+  font-weight: 700 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  z-index: 2 !important;
+}
+
+/* Logo below the heading — remove absolute positioning completely */
+.top-right-logo {
+  position: relative !important;
+  display: block !important;
+  margin: 0 auto !important;
+  width: 150px !important;     /* desktop default */
+  max-width: 45% !important;   /* won't exceed almost half the width */
+  height: auto !important;
+  z-index: 2 !important;
+  transform: none !important;
+  right: auto !important;
+  top: auto !important;
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .hero-banner {
+    padding: 70px 16px !important;
+    gap: 20px !important;
+    min-height: 240px;
+  }
+  .top-right-logo { width: 130px !important; max-width: 40% !important; }
+}
+
+/* Phone adjustments — ensures no overlap and smaller sizes */
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 48px 14px !important;
+    gap: 14px !important;
+    min-height: 200px;
+  }
+
+  .hero-banner h1 {
+    font-size: clamp(20px, 7.5vw, 28px) !important;
+    padding: 0 6px !important;
+    word-break: keep-all !important;
+  }
+
+  .top-right-logo {
+    width: 110px !important;
+    max-width: 60% !important;
+    margin-top: 6px !important;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 420px) {
+  .hero-banner {
+    padding: 40px 10px !important;
+    gap: 10px !important;
+    min-height: 170px;
+  }
+  .hero-banner h1 {
+    font-size: clamp(18px, 9vw, 24px) !important;
+  }
+  .top-right-logo { width: 90px !important; max-width: 70% !important; }
+}
+
+/* Safety: remove any previous conflicts that may set absolute on the image */
+img.top-right-logo[style] { /* inline styles won't block this override */
+  position: relative !important;
+  transform: none !important;
+}
+
 
 </style>
 </head>
@@ -649,6 +747,7 @@ Select accepted and presented papers at the conference will be submitted for pub
 <h2>Publicity</h2><p>
 
 All articles submitted to the conference cannot be fully or partially publicised on any social media platform until an official acceptance email is received from the publisher. If any author(s) violate this act, their article will be rejected for presentation and removed from the proceeding for publication.</p>
+
 
 
 
