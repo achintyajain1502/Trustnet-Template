@@ -333,6 +333,133 @@ margin-top: 10px;
 .nav-links a:hover {
   opacity: 0.8;
 }
+/* Make all sections adapt to screen width */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Responsive logo bar */
+.top-logos {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+}
+
+.top-logos img {
+  height: auto;
+  max-height: 60px;
+  width: auto;
+}
+
+/* Right logo area responsive */
+.right-logos {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.right-logos img {
+  max-height: 35px;
+  height: auto;
+  width: auto;
+}
+
+/* Navbar responsive */
+.navbar {
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.nav-links {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.nav-links a {
+  font-size: 15px;
+}
+
+/* Hero banner image scales correctly */
+.hero-banner {
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+}
+
+.hero-banner h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+/* Adjust the TrustNet logo */
+.top-right-logo {
+  position: absolute;
+  top: 20px;
+  right: 50%;
+  transform: translateX(50%);
+  max-width: 70%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .top-right-logo {
+    right: 250px;
+    transform: none;
+    max-width: 200px;
+  }
+}
+
+/* Make text sections fit mobile screens */
+.main {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 10px;
+}
+
+.main h2, .main h1 {
+  font-size: clamp(1.3rem, 2.5vw, 2rem);
+  text-align: center;
+}
+
+.main p, ul {
+  font-size: clamp(0.95rem, 2vw, 1rem);
+  line-height: 1.7;
+}
+
+/* Make sponsor logos responsive */
+.sponsor {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.sponsor img {
+  max-height: 80px;
+  height: auto;
+}
+
+/* Cards and timeline already flex – make sure they stack properly */
+.card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.timeline {
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .timeline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 
 </style>
 </head>
@@ -434,3 +561,4 @@ Select accepted and presented papers at the conference will be submitted for pub
 <h2>Publicity</h2><p>
 
 All articles submitted to the conference cannot be fully or partially publicised on any social media platform until an official acceptance email is received from the publisher. If any author(s) violate this act, their article will be rejected for presentation and removed from the proceeding for publication.</p>
+
