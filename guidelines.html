@@ -23,27 +23,57 @@ body, h1, h2, p, a {
   color: white;
   position: relative;
   overflow: hidden;
-}
 
-
-
-.hero-banner .content {
-  max-width: 800px;
-  margin: 0  auto;
-}
-
-
-.top-logos {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 5px 40px;
-  background-color: white;
+  justify-content: center;
+  gap: 25px; /* space between heading and logo */
 }
 
-.top-logos img {
-  height: 70px;   /* Left logo size */
-  width: auto;
+.hero-banner h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Make the logo centered below the heading */
+.top-right-logo {
+  position: static;
+  display: block;
+  margin: 0 auto;
+  width: 150px; /* Adjust as needed */
+  height: auto;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 80px 15px;
+    gap: 20px;
+  }
+
+  .hero-banner h1 {
+    font-size: 28px;
+  }
+
+  .top-right-logo {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-banner {
+    padding: 60px 15px;
+  }
+
+  .hero-banner h1 {
+    font-size: 24px;
+  }
+
+  .top-right-logo {
+    width: 100px;
+  }
 }
 
 .right-logos img {
@@ -619,6 +649,7 @@ Select accepted and presented papers at the conference will be submitted for pub
 <h2>Publicity</h2><p>
 
 All articles submitted to the conference cannot be fully or partially publicised on any social media platform until an official acceptance email is received from the publisher. If any author(s) violate this act, their article will be rejected for presentation and removed from the proceeding for publication.</p>
+
 
 
 
