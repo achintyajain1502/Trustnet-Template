@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TEMPLATE CREATION PBL</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* Basic Reset */
     * {
       margin: 0;
       padding: 0;
@@ -19,125 +20,97 @@
       line-height: 1.6;
     }
 
-    /* -------- TOP LOGO BAR -------- */
+    /* Header Logos */
     .top-logos {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 40px;
+      padding: 10px 30px;
       background-color: white;
+      flex-wrap: wrap;
     }
 
     .top-logos img {
-      height: 70px;
+      height: 60px;
       width: auto;
     }
 
     .right-logos {
       display: flex;
-      align-items: center;
       gap: 20px;
+      align-items: center;
     }
 
-    .right-logos img {
-      height: 35px;
-      width: auto;
-    }
-
-    /* -------- NAVBAR -------- */
+    /* Navbar */
     .navbar {
       display: flex;
-      align-items: center;
       justify-content: center;
       background: linear-gradient(to right, #2f6ec2, #6da9e9);
-      padding: 12px 25px;
-      position: relative;
+      padding: 10px 20px;
+      flex-wrap: wrap;
     }
 
     .nav-links {
       display: flex;
+      flex-wrap: wrap;
       list-style: none;
-      gap: 25px;
-      margin: 0;
-      padding: 0;
+      justify-content: center;
+      gap: 20px;
     }
 
     .nav-links a {
-      text-decoration: none;
       color: white;
-      font-size: 16px;
+      text-decoration: none;
       font-weight: 600;
-      transition: opacity 0.2s;
+      font-size: 15px;
+      transition: 0.2s;
     }
 
     .nav-links a:hover {
       opacity: 0.8;
     }
 
-    /* Hamburger for mobile */
-    .menu-toggle {
-      display: none;
-      position: absolute;
-      left: 20px;
-      font-size: 26px;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    @media (max-width: 900px) {
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background: linear-gradient(to bottom, #2f6ec2, #6da9e9);
-        width: 100%;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        z-index: 5;
-        text-align: center;
-      }
-
-      .nav-links.show {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: block;
-      }
-    }
-
-    /* -------- HERO SECTION -------- */
+    /* Hero Banner */
     .hero-banner {
       background: url('hero-area.jpg') center center / cover no-repeat;
       color: white;
       text-align: center;
-      padding: 100px 20px 150px;
+      padding: 100px 20px 150px; /* ✅ added more bottom padding */
       position: relative;
-      overflow: hidden;
+      z-index: 1;
     }
 
-    .top-right-logo {
+    .hero-banner .top-right-logo {
       position: absolute;
-      top: 20px;
-      right: 180px;
-      height: 180px;
+      top: 15px;
+      right: 20px;
+      max-height: 100px;
       width: auto;
-      z-index: 2;
     }
 
     .hero-banner h1 {
-      font-size: clamp(22px, 4vw, 34px);
-      font-weight: bold;
-      margin-bottom: 10px;
+      font-size: 2rem;
+      font-weight: 700;
     }
 
     .hero-banner p {
-      font-size: 16px;
-      margin: 6px 0;
+      font-size: 1rem;
+      margin: 10px 0;
     }
 
+    .apply-button {
+      display: flex;
+      flex-wrap: wrap;
+      background: linear-gradient(180deg, #2b3260, #1f254d);
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 40px;
+      margin: -5px;
+      font-weight: 50;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
     .register-button, .submit-button {
       display: inline-block;
       background: linear-gradient(180deg, #2b3260, #1f254d);
@@ -156,20 +129,7 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
-    @media (max-width: 768px) {
-      .top-right-logo {
-        position: static;
-        display: block;
-        margin: 0 auto 20px;
-        height: 100px;
-      }
-
-      .hero-banner {
-        padding: 60px 20px 100px;
-      }
-    }
-
-    /* -------- IMPORTANT DATES -------- */
+    /* Important Dates (Fixed Overlap Section) */
     .date-box {
       display: flex;
       flex-wrap: wrap;
@@ -178,11 +138,11 @@
       background: #2b3260;
       padding: 25px;
       border-radius: 12px;
-      margin: -40px auto 30px;
+      margin: -40px auto 30px; /* ✅ slightly reduced negative margin */
       max-width: 900px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       position: relative;
-      z-index: 2;
+      z-index: 2; /* ✅ ensures it appears above background but not overlapped */
     }
 
     .event-box {
@@ -199,7 +159,12 @@
       margin-bottom: 5px;
     }
 
-    /* -------- MAIN CONTENT -------- */
+    .event-box span {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* Main Section */
     .main {
       max-width: 90%;
       margin: 60px auto;
@@ -224,7 +189,7 @@
       font-size: 1rem;
     }
 
-    /* -------- SPEAKERS -------- */
+    /* Speakers */
     .speakers-container {
       display: flex;
       flex-wrap: wrap;
@@ -248,7 +213,7 @@
       font-weight: 500;
     }
 
-    /* -------- SPONSORS -------- */
+    /* Sponsors */
     .sponsor {
       display: flex;
       justify-content: center;
@@ -263,7 +228,7 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     }
 
-    /* -------- SCROLLING IMAGES -------- */
+    /* Scrolling Images */
     .scrolling-wrapper {
       overflow: hidden;
       width: 100%;
@@ -287,7 +252,7 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* -------- MAP -------- */
+    /* Map */
     .map-container {
       width: 100%;
       height: 400px;
@@ -304,11 +269,47 @@
       font-size: 1rem;
       margin-top: 5px;
     }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-banner h1 {
+        font-size: 1.4rem;
+      }
+      .register-button, .submit-button {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+      }
+      .event-box {
+        min-width: 130px;
+      }
+      .date-box {
+        margin-top: 0; /* ✅ prevents too much upward pull */
+      }
+      .top-logos img {
+        height: 50px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-banner {
+        padding: 70px 10px 180px; /* ✅ more bottom padding for small screens */
+      }
+      .hero-banner .top-right-logo {
+        max-height: 70px;
+        right: 10px;
+      }
+      .nav-links {
+        gap: 10px;
+      }
+      .main h2 {
+        font-size: 1.3rem;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- TOP LOGOS -->
+  <!-- Top Logos -->
   <nav class="top-logos">
     <img src="./muj.png" alt="MUJ">
     <div class="right-logos">
@@ -317,10 +318,9 @@
     </div>
   </nav>
 
-  <!-- NAVBAR -->
+  <!-- Navbar -->
   <nav class="navbar">
-    <button class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
-    <ul class="nav-links" id="navLinks">
+    <ul class="nav-links">
       <li><a href="pbl.html#Home">Home</a></li>
       <li><a href="pbl.html#About">About</a></li>
       <li><a href="Call for papers.html">Call for Papers</a></li>
@@ -332,10 +332,13 @@
       <li><a href="pbl.html#Venue">Venue</a></li>
       <li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
       <li><a href="pbl.html#travel">Travel & Accommodation</a></li>
+	<li><a href="admin.html">Admin</a></li>
+      <li><a href="https://admissions.jaipur.manipal.edu/" class="apply-button">APPLY NOW</a></li>
+      
     </ul>
   </nav>
 
-  <!-- HERO SECTION -->
+  <!-- Hero Banner -->
   <section class="hero-banner">
     <img src="./trust.png" alt="TrustNet Logo" class="top-right-logo">
     <div class="content">
@@ -343,11 +346,11 @@
       <p><i class="fas fa-map-marker-alt"></i> Manipal University Jaipur</p>
       <p><i class="fas fa-calendar-alt"></i> 16–17, Feb 2026</p>
       <a href="registerhere.html" class="register-button">REGISTER HERE</a>
-      <a href="#" class="submit-button">SUBMIT PAPER</a>
+      <a href="https://cmt3.research.microsoft.com/TrustNet2026" class="submit-button">SUBMIT PAPER</a>
     </div>
   </section>
 
-  <!-- IMPORTANT DATES -->
+  <!-- Important Dates -->
   <div class="date-box">
     <div class="event-box"><h2>Call for Paper</h2><span>September 9, 2025</span></div>
     <div class="event-box"><h2>Submission</h2><span>November 15, 2025</span></div>
@@ -355,7 +358,7 @@
     <div class="event-box"><h2>Registration End</h2><span>December 25, 2025</span></div>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- Main Content -->
   <section class="main">
     <div class="content">
       <h2 id="Home">International Conference On Trusted Networks and Intelligent Systems 2025</h2>
@@ -433,13 +436,49 @@
       <p1><b>Address:</b></p1>
       <p2>Manipal University Jaipur, Dehmi-Kalan, Near GVK Toll Plaza, Jaipur-Ajmer Express Highway, Jaipur, Rajasthan 303007</p2>
     </section>
-   </section>
-
-  <script>
-    function toggleMenu() {
-      document.getElementById("navLinks").classList.toggle("show");
-    }
-  </script>
+  </section>
 </body>
-</html>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
+  authDomain: "trustnet-528c2.firebaseapp.com",
+  projectId: "trustnet-528c2",
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Important Dates
+db.collection("dates").onSnapshot(snap=>{
+  const dateBox=document.querySelector(".date-box");
+  dateBox.innerHTML="";
+  snap.forEach(doc=>{
+    const d=doc.data();
+    dateBox.innerHTML+=`
+      <div class="event-box">
+        <h2>${d.event}</h2>
+        <span>${d.date}</span>
+      </div>`;
+  });
+});
+
+// Speakers
+db.collection("speakers").onSnapshot(snap=>{
+  const sp=document.querySelector(".speakers-container");
+  sp.innerHTML="";
+  snap.forEach(doc=>{
+    const s=doc.data();
+    sp.innerHTML+=`
+      <div>
+        <img src="${s.image}">
+        <p><b>${s.name}</b><br>${s.affiliation}</p>
+      </div>`;
+  });
+});
+</script>
+
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TRUSTNET 2026 – Admin Dashboard</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<style>
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{margin:0;background:#eef1f6;padding:40px}
+
+/* HEADER */
+.top-header{
+  background:#fff;height:80px;display:flex;
+  align-items:center;justify-content:space-between;
+  padding:0 40px;box-shadow:0 4px 15px rgba(0,0,0,.08);
+  margin:-40px -40px 40px -40px
+}
+.top-header h1{font-size:26px;font-weight:700}
+.logout{color:#2563eb;font-weight:700;text-decoration:none}
+
+/* GRID */
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+
+/* CARD */
+.card{
+  background:#fff;border-radius:14px;padding:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08)
+}
+.card h2{color:#2563eb;font-size:26px}
+.hr{border-bottom:1px solid #e5e7eb;margin:20px 0}
+
+/* INPUTS */
+label{font-weight:600;margin-top:15px;display:block}
+input,textarea{
+  width:100%;padding:12px;border:1px solid #ddd;
+  border-radius:8px;font-size:15px
+}
+textarea{height:120px}
+
+/* BUTTONS */
+.btn{
+  background:#2563eb;color:#fff;border:none;
+  padding:10px 22px;border-radius:8px;
+  font-weight:600;cursor:pointer
+}
+.btn-outline{
+  background:#fff;color:#111;border:1px solid #ddd
+}
+
+/* LIST */
+.list-item{
+  display:grid;
+  grid-template-columns:1fr 220px auto;
+  align-items:center;
+  gap:12px;
+  padding:15px 0;border-bottom:1px solid #eee
+}
+.list-item input{padding:8px}
+
+/* SPEAKER */
+.speaker-item{
+  padding:15px 0;border-bottom:1px solid #eee
+}
+.speaker-name{font-weight:700}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="top-header">
+  <h1>TRUSTNET 2026 – Admin Dashboard</h1>
+  <a href="#" class="logout" onclick="logout()">LOGOUT</a>
+
+</div>
+
+<div class="admin-grid">
+
+<!-- IMPORTANT DATES -->
+<div class="card">
+  <h2>Manage Important Dates</h2>
+  <div class="hr"></div>
+
+  <h3>Add New Date</h3>
+  <input id="eventName" placeholder="Event Name (e.g., Paper Deadline)">
+  <input id="eventDate" placeholder="Date (e.g., February 15, 2026)">
+  <button class="btn" onclick="addDate()">Add Date</button>
+
+  <div class="hr"></div>
+  <h3>Edit/Delete Dates</h3>
+  <div id="datesList"></div>
+</div>
+
+<!-- SPEAKERS -->
+<div class="card">
+  <h2>Manage Keynote Speakers</h2>
+  <div class="hr"></div>
+
+  <h3>Add New Speaker</h3>
+
+  <label>Name:</label>
+  <input id="spName">
+
+  <label>Affiliation:</label>
+  <input id="spAff">
+
+ 
+
+  <label>Speaker Image URL:</label>
+  <input id="spImg" placeholder="https://image-url">
+
+  <button class="btn" onclick="addSpeaker()">Add Speaker</button>
+
+  <div class="hr"></div>
+  <h3>Current Speakers</h3>
+  <div id="speakerList"></div>
+</div>
+
+</div>
+
+<script>
+/* FIREBASE CONFIG */
+firebase.initializeApp({
+  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
+  authDomain: "trustnet-528c2.firebaseapp.com",
+  projectId: "trustnet-528c2"
+});
+const db = firebase.firestore();
+
+/* ========== IMPORTANT DATES ========== */
+function addDate(){
+  db.collection("dates").add({
+    event: eventName.value,
+    date: eventDate.value,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+  eventName.value="";
+  eventDate.value="";
+}
+
+db.collection("dates").orderBy("createdAt").onSnapshot(snap=>{
+  datesList.innerHTML="";
+  snap.forEach(doc=>{
+    const d=doc.data();
+    datesList.innerHTML+=`
+      <div class="list-item">
+        <strong>${d.event}</strong>
+        <input id="date-${doc.id}" value="${d.date}">
+        <div>
+          <button class="btn"
+            onclick="updateDate('${doc.id}')">Update</button>
+          <button class="btn btn-outline"
+            onclick="deleteDate('${doc.id}')">Delete</button>
+        </div>
+      </div>`;
+  });
+});
+
+function updateDate(id){
+  db.collection("dates").doc(id).update({
+    date: document.getElementById("date-"+id).value
+  });
+}
+
+function deleteDate(id){
+  db.collection("dates").doc(id).delete();
+}
+
+/* ========== SPEAKERS ========== */
+function addSpeaker(){
+  db.collection("speakers").add({
+    name: spName.value,
+    affiliation: spAff.value,
+    
+    image: spImg.value
+  });
+  spName.value="";spAff.value="";spImg.value="";
+}
+
+db.collection("speakers").onSnapshot(snap=>{
+  speakerList.innerHTML="";
+  snap.forEach(doc=>{
+    const s=doc.data();
+    speakerList.innerHTML+=`
+      <div class="speaker-item">
+        <div class="speaker-name">${s.name}</div>
+        <button class="btn"
+          onclick="deleteSpeaker('${doc.id}')">Delete</button>
+      </div>`;
+  });
+});
+
+function deleteSpeaker(id){
+  db.collection("speakers").doc(id).delete();
+}
+</script>
+
+</body>
+<script>
+/* ===== ADMIN LOGIN CHECK ===== */
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+
+/* ===== LOGOUT FUNCTION ===== */
+function logout(){
+  sessionStorage.removeItem("adminLoggedIn");
+  window.location.href = "login.html";
+}
+</script>
+
+</html>
