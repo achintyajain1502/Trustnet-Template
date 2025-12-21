@@ -48,6 +48,7 @@
       background: linear-gradient(to right, #2f6ec2, #6da9e9);
       padding: 10px 20px;
       flex-wrap: wrap;
+	position:relative;
     }
 
     .nav-links {
@@ -69,6 +70,22 @@
     .nav-links a:hover {
       opacity: 0.8;
     }
+.apply-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-toggle {
+  position: static; /* INLINE with button */
+  background: #2b3260;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
 
     /* Hero Banner */
     .hero-banner {
@@ -305,6 +322,78 @@
         font-size: 1.3rem;
       }
     }
+
+/* ===== Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 240px;
+  height: 100%;
+  background: linear-gradient(180deg, #2b3260, #1f254d);
+  padding-top: 80px;
+  transform: translateX(100%);
+  transition: 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar.active {
+  transform: translateX(0);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 15px 25px;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  top: 87px;
+  right: 20px;
+  font-size: 22px;
+  background: #2b3260;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+
+
+/* Push content when sidebar opens */
+body.sidebar-open .main,
+body.sidebar-open .hero-banner {
+  margin-right: 240px;
+  transition: 0.3s;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  body.sidebar-open .main,
+  body.sidebar-open .hero-banner {
+    margin-right: 0;
+  }
+}
+
   </style>
 </head>
 
@@ -332,12 +421,23 @@
       <li><a href="pbl.html#Venue">Venue</a></li>
       <li><a href="Proposal Guidelines.html">Proposal Guidelines</a></li>
       <li><a href="pbl.html#travel">Travel & Accommodation</a></li>
-	<li><a href="admin.html">Admin</a></li>
-      <li><a href="https://admissions.jaipur.manipal.edu/" class="apply-button">APPLY NOW</a></li>
-      
+      <li class="apply-wrapper">
+  <a href="https://admissions.jaipur.manipal.edu/" class="apply-button">
+    APPLY NOW
+  </a>
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+</li>
+
     </ul>
   </nav>
-
+  <div class="sidebar" id="sidebar">
+  <ul>
+    <li><a href="admin.html">Admin</a></li>
+  </ul>
+</div>
+ 
   <!-- Hero Banner -->
   <section class="hero-banner">
     <img src="./trust.png" alt="TrustNet Logo" class="top-right-logo">
@@ -402,10 +502,10 @@
     <h2 id="Sponsors">Publications</h2>
     <p>The proceedings of TrustNet’26 will be published in Lecture Notes in Networks and Systems (LNNS).
       LNNS is abstracted and indexed in SCOPUS, INSPEC, WTI Frankfurt eG, zbMATH, SCImago.</p>
-    <div class="sponsor">
-      <img src="./scopus-logo.webp" alt="Scopus">
-      <img src="./springer.webp" alt="Springer">
-    </div>
+    <div class="sponsor" id="publisherLogos"></div>
+
+    <h2>Conference Partners</h2>
+    <div class="sponsor" id="partnerLogos"></div>
 
     <h2 id="travel">About Jaipur</h2>
     <p>Jaipur, famously known as the Pink City, is the vibrant capital of Rajasthan and a remarkable testament to Indian architecture and culture.
@@ -437,7 +537,16 @@
       <p2>Manipal University Jaipur, Dehmi-Kalan, Near GVK Toll Plaza, Jaipur-Ajmer Express Highway, Jaipur, Rajasthan 303007</p2>
     </section>
   </section>
+<script>
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("active");
+  document.body.classList.toggle("sidebar-open");
+}
+</script>
+
 </body>
+
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -479,6 +588,38 @@ db.collection("speakers").onSnapshot(snap=>{
   });
 });
 </script>
+
+
+<script>
+// Publishers
+db.collection("publishers").onSnapshot(snap=>{
+  const pub = document.getElementById("publisherLogos");
+  pub.innerHTML = "";
+  snap.forEach(doc=>{
+    const p = doc.data();
+    pub.innerHTML += `
+      <img src="${p.logo}" alt="${p.name}">
+    `;
+  });
+});
+</script>
+
+
+<script>
+// Partner
+db.collection("partner").onSnapshot(snap=>{
+  const pub = document.getElementById("partnerLogos");
+  pub.innerHTML = "";
+  snap.forEach(doc=>{
+    const p = doc.data();
+    pub.innerHTML += `
+      <img src="${p.logo}" alt="${p.name}">
+    `;
+  });
+});
+</script>
+
+
 
 
 </html>

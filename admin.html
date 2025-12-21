@@ -35,11 +35,10 @@ body{margin:0;background:#eef1f6;padding:40px}
 
 /* INPUTS */
 label{font-weight:600;margin-top:15px;display:block}
-input,textarea{
+input{
   width:100%;padding:12px;border:1px solid #ddd;
   border-radius:8px;font-size:15px
 }
-textarea{height:120px}
 
 /* BUTTONS */
 .btn{
@@ -48,7 +47,7 @@ textarea{height:120px}
   font-weight:600;cursor:pointer
 }
 .btn-outline{
-  background:#fff;color:#111;border:1px solid #ddd
+  background:#DBDBDB;color:#111;border:1px solid #ddd
 }
 
 /* LIST */
@@ -61,11 +60,11 @@ textarea{height:120px}
 }
 .list-item input{padding:8px}
 
-/* SPEAKER */
-.speaker-item{
+/* SIMPLE LIST */
+.simple-item{
   padding:15px 0;border-bottom:1px solid #eee
 }
-.speaker-name{font-weight:700}
+.simple-name{font-weight:700}
 </style>
 </head>
 
@@ -75,7 +74,6 @@ textarea{height:120px}
 <div class="top-header">
   <h1>TRUSTNET 2026 – Admin Dashboard</h1>
   <a href="#" class="logout" onclick="logout()">LOGOUT</a>
-
 </div>
 
 <div class="admin-grid">
@@ -85,13 +83,11 @@ textarea{height:120px}
   <h2>Manage Important Dates</h2>
   <div class="hr"></div>
 
-  <h3>Add New Date</h3>
-  <input id="eventName" placeholder="Event Name (e.g., Paper Deadline)">
-  <input id="eventDate" placeholder="Date (e.g., February 15, 2026)">
+  <input id="eventName" placeholder="Event Name">
+  <input id="eventDate" placeholder="Date">
   <button class="btn" onclick="addDate()">Add Date</button>
 
   <div class="hr"></div>
-  <h3>Edit/Delete Dates</h3>
   <div id="datesList"></div>
 </div>
 
@@ -100,24 +96,51 @@ textarea{height:120px}
   <h2>Manage Keynote Speakers</h2>
   <div class="hr"></div>
 
-  <h3>Add New Speaker</h3>
-
-  <label>Name:</label>
+  <label>Name</label>
   <input id="spName">
-
-  <label>Affiliation:</label>
+  <label>Affiliation</label>
   <input id="spAff">
-
- 
-
-  <label>Speaker Image URL:</label>
-  <input id="spImg" placeholder="https://image-url">
+  <label>Image URL</label>
+  <input id="spImg">
 
   <button class="btn" onclick="addSpeaker()">Add Speaker</button>
 
   <div class="hr"></div>
-  <h3>Current Speakers</h3>
   <div id="speakerList"></div>
+</div>
+
+<!-- PUBLISHERS -->
+<div class="card">
+  <h2>Manage Publisher Logos</h2>
+  <div class="hr"></div>
+
+  <label>Publisher Name</label>
+  <input id="pubName">
+
+  <label>Logo Image URL</label>
+  <input id="pubLogo">
+
+  <button class="btn" onclick="addPublisher()">Add Publisher</button>
+
+  <div class="hr"></div>
+  <div id="publisherList"></div>
+</div>
+
+<!-- PARTNER -->
+<div class="card">
+  <h2>Manage Conference Partner</h2>
+  <div class="hr"></div>
+
+  <label>Partner Name</label>
+  <input id="partnerName">
+
+  <label>Logo Image URL</label>
+  <input id="partnerLogo">
+
+  <button class="btn" onclick="addPartner()">Add Partner</button>
+
+  <div class="hr"></div>
+  <div id="partnerList"></div>
 </div>
 
 </div>
@@ -131,18 +154,17 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-/* ========== IMPORTANT DATES ========== */
+/* IMPORTANT DATES */
 function addDate(){
   db.collection("dates").add({
     event: eventName.value,
     date: eventDate.value,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   });
-  eventName.value="";
-  eventDate.value="";
+  eventName.value="";eventDate.value="";
 }
 
-db.collection("dates").orderBy("createdAt").onSnapshot(snap=>{
+db.collection("dates").onSnapshot(snap=>{
   datesList.innerHTML="";
   snap.forEach(doc=>{
     const d=doc.data();
@@ -151,10 +173,8 @@ db.collection("dates").orderBy("createdAt").onSnapshot(snap=>{
         <strong>${d.event}</strong>
         <input id="date-${doc.id}" value="${d.date}">
         <div>
-          <button class="btn"
-            onclick="updateDate('${doc.id}')">Update</button>
-          <button class="btn btn-outline"
-            onclick="deleteDate('${doc.id}')">Delete</button>
+          <button class="btn" onclick="updateDate('${doc.id}')">Update</button>
+          <button class="btn btn-outline" onclick="deleteDate('${doc.id}')">Delete</button>
         </div>
       </div>`;
   });
@@ -165,17 +185,15 @@ function updateDate(id){
     date: document.getElementById("date-"+id).value
   });
 }
-
 function deleteDate(id){
   db.collection("dates").doc(id).delete();
 }
 
-/* ========== SPEAKERS ========== */
+/* SPEAKERS */
 function addSpeaker(){
   db.collection("speakers").add({
     name: spName.value,
     affiliation: spAff.value,
-    
     image: spImg.value
   });
   spName.value="";spAff.value="";spImg.value="";
@@ -186,31 +204,73 @@ db.collection("speakers").onSnapshot(snap=>{
   snap.forEach(doc=>{
     const s=doc.data();
     speakerList.innerHTML+=`
-      <div class="speaker-item">
-        <div class="speaker-name">${s.name}</div>
-        <button class="btn"
-          onclick="deleteSpeaker('${doc.id}')">Delete</button>
+      <div class="simple-item">
+        <div class="simple-name">${s.name}</div>
+        <button class="btn" onclick="deleteSpeaker('${doc.id}')">Delete</button>
       </div>`;
   });
 });
-
 function deleteSpeaker(id){
   db.collection("speakers").doc(id).delete();
 }
-</script>
 
-</body>
-<script>
-/* ===== ADMIN LOGIN CHECK ===== */
+/* PUBLISHERS */
+function addPublisher(){
+  db.collection("publishers").doc(pubName.value).set({
+    name: pubName.value,
+    logo: pubLogo.value
+  });
+  pubName.value="";pubLogo.value="";
+}
+
+db.collection("publishers").onSnapshot(snap=>{
+  publisherList.innerHTML="";
+  snap.forEach(doc=>{
+    const p=doc.data();
+    publisherList.innerHTML+=`
+      <div class="simple-item">
+        <div class="simple-name">${p.name}</div>
+        <button class="btn btn-outline" onclick="deletePublisher('${doc.id}')">Delete</button>
+      </div>`;
+  });
+});
+function deletePublisher(id){
+  db.collection("publishers").doc(id).delete();
+}
+
+/* PARTNER */
+function addPartner(){
+  db.collection("partner").doc(partnerName.value).set({
+    name: partnerName.value,
+    logo: partnerLogo.value
+  });
+  partnerName.value="";partnerLogo.value="";
+}
+
+db.collection("partner").onSnapshot(snap=>{
+  partnerList.innerHTML="";
+  snap.forEach(doc=>{
+    const p=doc.data();
+    partnerList.innerHTML+=`
+      <div class="simple-item">
+        <div class="simple-name">${p.name}</div>
+        <button class="btn btn-outline" onclick="deletePartner('${doc.id}')">Delete</button>
+      </div>`;
+  });
+});
+function deletePartner(id){
+  db.collection("partner").doc(id).delete();
+}
+
+/* AUTH */
 if (sessionStorage.getItem("adminLoggedIn") !== "true") {
   window.location.href = "login.html";
 }
-
-/* ===== LOGOUT FUNCTION ===== */
 function logout(){
   sessionStorage.removeItem("adminLoggedIn");
   window.location.href = "login.html";
 }
 </script>
 
+</body>
 </html>
