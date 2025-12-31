@@ -394,6 +394,28 @@ body.sidebar-open .hero-banner {
   }
 }
 
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background: url("uparrow.png") center center / cover no-repeat;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: none;
+  z-index: 999;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+#backToTop:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
   </style>
 </head>
 
@@ -543,6 +565,27 @@ function toggleSidebar() {
   document.body.classList.toggle("sidebar-open");
 }
 </script>
+<button id="backToTop" aria-label="Back to top"></button>
+
+<script>
+  const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
+
 
 </body>
 
