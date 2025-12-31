@@ -154,10 +154,6 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-<script>
-  const storage = firebase.storage();
-</script>
-
 /* IMPORTANT DATES */
 function addDate(){
   db.collection("dates").add({
@@ -275,7 +271,6 @@ function logout(){
   window.location.href = "login.html";
 }
 </script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
 </body>
 </html>
