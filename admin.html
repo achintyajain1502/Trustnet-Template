@@ -100,8 +100,9 @@ input{
   <input id="spName">
   <label>Affiliation</label>
   <input id="spAff">
-  <label>Image URL</label>
-  <input id="spImg">
+  <label>Speaker Image</label>
+<input type="file" id="spImg" accept="image/*">
+
 
   <button class="btn" onclick="addSpeaker()">Add Speaker</button>
 
@@ -117,8 +118,9 @@ input{
   <label>Publisher Name</label>
   <input id="pubName">
 
-  <label>Logo Image URL</label>
-  <input id="pubLogo">
+  <label>Logo Image </label>
+  <input type="file" id="pubLogo" accept="image/*">
+
 
   <button class="btn" onclick="addPublisher()">Add Publisher</button>
 
@@ -134,8 +136,9 @@ input{
   <label>Partner Name</label>
   <input id="partnerName">
 
-  <label>Logo Image URL</label>
-  <input id="partnerLogo">
+  <label>Partner Logo Image </label>
+  <input type="file" id="partnerLogo" accept="image/*">
+
 
   <button class="btn" onclick="addPartner()">Add Partner</button>
 
@@ -153,6 +156,11 @@ firebase.initializeApp({
   projectId: "trustnet-528c2"
 });
 const db = firebase.firestore();
+-
+const storage = firebase.storage();
+
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
 /* IMPORTANT DATES */
 function addDate(){
@@ -190,13 +198,29 @@ function deleteDate(id){
 }
 
 /* SPEAKERS */
-function addSpeaker(){
-  db.collection("speakers").add({
+async function addSpeaker(){
+  const file = spImg.files[0];
+  if (!file) {
+    alert("Please select an image");
+    return;
+  }
+
+  const storageRef = storage.ref(
+    "speakers/" + Date.now() + "_" + file.name
+  );
+
+  await storageRef.put(file);
+  const imageURL = await storageRef.getDownloadURL();
+
+  await db.collection("speakers").add({
     name: spName.value,
     affiliation: spAff.value,
-    image: spImg.value
+    image: imageURL   // ✅ PUBLIC HTTPS URL
   });
-  spName.value="";spAff.value="";spImg.value="";
+
+  spName.value="";
+  spAff.value="";
+  spImg.value="";
 }
 
 db.collection("speakers").onSnapshot(snap=>{
@@ -215,12 +239,18 @@ function deleteSpeaker(id){
 }
 
 /* PUBLISHERS */
-function addPublisher(){
-  db.collection("publishers").doc(pubName.value).set({
+async function addPublisher(){
+  const file = pubLogo.files[0];
+  const ref = storage.ref("publishers/" + Date.now() + "_" + file.name);
+  await ref.put(file);
+  const url = await ref.getDownloadURL();
+
+  await db.collection("publishers").doc(pubName.value).set({
     name: pubName.value,
-    logo: pubLogo.value
+    logo: url
   });
-  pubName.value="";pubLogo.value="";
+
+  pubName.value=""; pubLogo.value="";
 }
 
 db.collection("publishers").onSnapshot(snap=>{
@@ -239,13 +269,20 @@ function deletePublisher(id){
 }
 
 /* PARTNER */
-function addPartner(){
-  db.collection("partner").doc(partnerName.value).set({
+async function addPartner(){
+  const file = partnerLogo.files[0];
+  const ref = storage.ref("partners/" + Date.now() + "_" + file.name);
+  await ref.put(file);
+  const url = await ref.getDownloadURL();
+
+  await db.collection("partner").doc(partnerName.value).set({
     name: partnerName.value,
-    logo: partnerLogo.value
+    logo: url
   });
-  partnerName.value="";partnerLogo.value="";
+
+  partnerName.value=""; partnerLogo.value="";
 }
+
 
 db.collection("partner").onSnapshot(snap=>{
   partnerList.innerHTML="";
