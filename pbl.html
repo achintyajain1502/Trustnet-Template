@@ -85,6 +85,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
+  transition: opacity 0.3s ease;
 }
 
     /* Hero Banner */
@@ -408,7 +409,7 @@ body.sidebar-open .hero-banner {
   display: none;
   z-index: 999;
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s ease;
 }
 
 #backToTop:hover {
@@ -510,16 +511,7 @@ body.sidebar-open .hero-banner {
     </div>
 
     <h2 id="Speaker">Our Eminent Speakers</h2>
-    <div class="speakers-container">
-      <div>
-        <img src="./p1.webp" alt="Dr. Anupam Tiwari">
-        <p><b>Dr. Anupam Tiwari</b><br>Cyber Advisor, Ministry of Defence</p>
-      </div>
-      <div>
-        <img src="./p2.webp" alt="Rajat Mittal">
-        <p><b>Rajat Mittal</b><br>Associate Professor, IIT Kanpur</p>
-      </div>
-    </div>
+    
 
     <h2 id="Sponsors">Publications</h2>
     <p>The proceedings of TrustNet’26 will be published in Lecture Notes in Networks and Systems (LNNS).
@@ -560,32 +552,25 @@ body.sidebar-open .hero-banner {
     </section>
   </section>
 <script>
+const sidebarBtn = document.querySelector(".sidebar-toggle");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 150) {
+    sidebarBtn.style.opacity = "0";
+    sidebarBtn.style.pointerEvents = "none";
+  } else {
+    sidebarBtn.style.opacity = "1";
+    sidebarBtn.style.pointerEvents = "auto";
+  }
+});
+
 function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("active");
   document.body.classList.toggle("sidebar-open");
 }
 </script>
+
 <button id="backToTop" aria-label="Back to top"></button>
-
-<script>
-  const backToTopBtn = document.getElementById("backToTop");
-
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      backToTopBtn.style.display = "block";
-    } else {
-      backToTopBtn.style.display = "none";
-    }
-  });
-
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-</script>
-
 
 </body>
 
@@ -663,6 +648,23 @@ db.collection("partner").onSnapshot(snap=>{
 </script>
 
 
+<script>
+  const backToTopBtn = document.getElementById("backToTop");
 
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+</script>
 
 </html>
