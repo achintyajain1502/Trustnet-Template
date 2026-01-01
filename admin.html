@@ -7,7 +7,7 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
 
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
@@ -107,6 +107,28 @@ input{
   border-bottom:1px solid #eee
 }
 .simple-name{font-weight:700}
+
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background: url("uparrow.png") center center / cover no-repeat;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: none;
+  z-index: 999;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  transition: transform 0.3s, opacity 0.3s ease;
+}
+
+#backToTop:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
 </style>
 </head>
 
@@ -196,16 +218,17 @@ input{
 </div>
 
 </div>
+<button id="backToTop" aria-label="Back to top"></button>
+
 
 <script>
-/* FIREBASE */
 firebase.initializeApp({
   apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
   authDomain: "trustnet-528c2.firebaseapp.com",
   projectId: "trustnet-528c2"
 });
+
 const db = firebase.firestore();
-const storage = firebase.storage();
 
 /* AUTH */
 if(sessionStorage.getItem("adminLoggedIn")!=="true"){
@@ -216,26 +239,37 @@ function logout(){
   window.location.href="pbl.html";
 }
 
-/* IMPORTANT DATES */
-function addDate(){
-  db.collection("dates").add({
-    event:eventName.value,
-    date:eventDate.value
+/* ---------- HELPER ---------- */
+function fileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
   });
-  eventName.value=""; eventDate.value="";
 }
 
-db.collection("dates").onSnapshot(snap=>{
+/* ---------- DATES ---------- */
+function addDate(){
+  const e=document.getElementById("eventName");
+  const d=document.getElementById("eventDate");
+  if(!e.value||!d.value) return alert("Fill all fields");
+
+  db.collection("dates").add({event:e.value,date:d.value});
+  e.value=""; d.value="";
+}
+
+db.collection("dates").onSnapshot(s=>{
   datesList.innerHTML="";
-  snap.forEach(doc=>{
+  s.forEach(doc=>{
     const d=doc.data();
     datesList.innerHTML+=`
       <div class="list-item">
         <strong>${d.event}</strong>
         <input id="date-${doc.id}" value="${d.date}">
         <div>
-          <button type="button" class="btn" onclick="updateDate('${doc.id}')">Update</button>
-          <button type="button" class="btn btn-outline" onclick="deleteDate('${doc.id}')">Delete</button>
+          <button class="btn" onclick="updateDate('${doc.id}')">Update</button>
+          <button class="btn btn-outline" onclick="deleteDate('${doc.id}')">Delete</button>
         </div>
       </div>`;
   });
@@ -245,94 +279,91 @@ function updateDate(id){
     date:document.getElementById("date-"+id).value
   });
 }
-function deleteDate(id){
-  db.collection("dates").doc(id).delete();
-}
+function deleteDate(id){db.collection("dates").doc(id).delete();}
 
-/* SPEAKERS */
+/* ---------- SPEAKERS ---------- */
 async function addSpeaker(){
-  const file=spImg.files[0];
-  if(!file){alert("Select image");return;}
+  const n=spName.value,a=spAff.value,f=spImg.files[0];
+  if(!n||!a||!f) return alert("Fill all fields");
 
-  const ref=storage.ref("speakers/"+Date.now()+"_"+file.name);
-  await ref.put(file);
-  const url=await ref.getDownloadURL();
-
-  await db.collection("speakers").add({
-    name:spName.value,
-    affiliation:spAff.value,
-    image:url
-  });
-
+  const img=await fileToBase64(f);
+  await db.collection("speakers").add({name:n,affiliation:a,image:img});
   spName.value=""; spAff.value=""; spImg.value="";
 }
 
-db.collection("speakers").onSnapshot(snap=>{
+db.collection("speakers").onSnapshot(s=>{
   speakerList.innerHTML="";
-  snap.forEach(doc=>{
-    const s=doc.data();
+  s.forEach(doc=>{
     speakerList.innerHTML+=`
       <div class="simple-item">
-        <div class="simple-name">${s.name}</div>
-        <button type="button" class="btn btn-outline" onclick="deleteSpeaker('${doc.id}')">Delete</button>
+        <div class="simple-name">${doc.data().name}</div>
+        <button class="btn btn-outline" onclick="deleteSpeaker('${doc.id}')">Delete</button>
       </div>`;
   });
 });
-function deleteSpeaker(id){
-  db.collection("speakers").doc(id).delete();
-}
+function deleteSpeaker(id){db.collection("speakers").doc(id).delete();}
 
-/* PUBLISHERS */
+/* ---------- PUBLISHERS ---------- */
 async function addPublisher(){
-  const file=pubLogo.files[0];
-  const ref=storage.ref("publishers/"+Date.now()+"_"+file.name);
-  await ref.put(file);
-  const url=await ref.getDownloadURL();
-  await db.collection("publishers").doc(pubName.value).set({
-    name:pubName.value,logo:url
-  });
+  const n=pubName.value,f=pubLogo.files[0];
+  if(!n||!f) return alert("Fill all fields");
+
+  const img=await fileToBase64(f);
+  await db.collection("publishers").add({name:n,logo:img});
   pubName.value=""; pubLogo.value="";
 }
-db.collection("publishers").onSnapshot(snap=>{
+
+db.collection("publishers").onSnapshot(s=>{
   publisherList.innerHTML="";
-  snap.forEach(doc=>{
-    const p=doc.data();
+  s.forEach(doc=>{
     publisherList.innerHTML+=`
       <div class="simple-item">
-        <div class="simple-name">${p.name}</div>
-        <button type="button" class="btn btn-outline" onclick="deletePublisher('${doc.id}')">Delete</button>
+        <div class="simple-name">${doc.data().name}</div>
+        <button class="btn btn-outline" onclick="deletePublisher('${doc.id}')">Delete</button>
       </div>`;
   });
 });
-function deletePublisher(id){
-  db.collection("publishers").doc(id).delete();
-}
+function deletePublisher(id){db.collection("publishers").doc(id).delete();}
 
-/* PARTNER */
+/* ---------- PARTNERS ---------- */
 async function addPartner(){
-  const file=partnerLogo.files[0];
-  const ref=storage.ref("partners/"+Date.now()+"_"+file.name);
-  await ref.put(file);
-  const url=await ref.getDownloadURL();
-  await db.collection("partner").doc(partnerName.value).set({
-    name:partnerName.value,logo:url
-  });
+  const n=partnerName.value,f=partnerLogo.files[0];
+  if(!n||!f) return alert("Fill all fields");
+
+  const img=await fileToBase64(f);
+  await db.collection("partner").add({name:n,logo:img});
   partnerName.value=""; partnerLogo.value="";
 }
-db.collection("partner").onSnapshot(snap=>{
+
+db.collection("partner").onSnapshot(s=>{
   partnerList.innerHTML="";
-  snap.forEach(doc=>{
-    const p=doc.data();
+  s.forEach(doc=>{
     partnerList.innerHTML+=`
       <div class="simple-item">
-        <div class="simple-name">${p.name}</div>
-        <button type="button" class="btn btn-outline" onclick="deletePartner('${doc.id}')">Delete</button>
+        <div class="simple-name">${doc.data().name}</div>
+        <button class="btn btn-outline" onclick="deletePartner('${doc.id}')">Delete</button>
       </div>`;
   });
 });
-function deletePartner(id){
-  db.collection("partner").doc(id).delete();
-}
+function deletePartner(id){db.collection("partner").doc(id).delete();}
+
+const backToTopBtn = document.getElementById("backToTop");
+
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
 </script>
 
 </body>
