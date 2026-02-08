@@ -122,54 +122,38 @@ db.collection("dates").onSnapshot(s=>{
 
 /* SPEAKERS */
 async function addSpeaker(){
-  const img=await fileToBase64(spImg.files[0]);
-  db.collection("speakers").add({name:spName.value,affiliation:spAff.value,image:img});
-  spName.value="";spAff.value="";spImg.value="";
-}
-db.collection("speakers").onSnapshot(s=>{
-  speakerList.innerHTML="";
-  s.forEach(d=>{
-    speakerList.innerHTML+=`
-    <div class="simple-item">
-      ${d.data().name}
-      <button class="btn-outline" onclick="db.collection('speakers').doc('${d.id}').delete()">Delete</button>
-    </div>`;
+  if(!spName.value || !spAff.value || !spImg.files[0]) return alert("Fill all fields");
+  const img = await fileToBase64(spImg.files[0]);
+  await db.collection("speakers").add({
+    name: spName.value,
+    affiliation: spAff.value,
+    image: img
   });
-});
+  spName.value=""; spAff.value=""; spImg.value="";
+}
 
 /* PUBLISHERS */
 async function addPublisher(){
-  const img=await fileToBase64(pubLogo.files[0]);
-  db.collection("publishers").add({name:pubName.value,logo:img});
-  pubName.value="";pubLogo.value="";
-}
-db.collection("publishers").onSnapshot(s=>{
-  publisherList.innerHTML="";
-  s.forEach(d=>{
-    publisherList.innerHTML+=`
-    <div class="simple-item">
-      ${d.data().name}
-      <button class="btn-outline" onclick="db.collection('publishers').doc('${d.id}').delete()">Delete</button>
-    </div>`;
+  if(!pubName.value || !pubLogo.files[0]) return alert("Fill all fields");
+  const img = await fileToBase64(pubLogo.files[0]);
+  await db.collection("publishers").add({
+    name: pubName.value,
+    logo: img
   });
-});
+  pubName.value=""; pubLogo.value="";
+}
 
 /* PARTNERS */
 async function addPartner(){
-  const img=await fileToBase64(partnerLogo.files[0]);
-  db.collection("partner").add({name:partnerName.value,logo:img});
-  partnerName.value="";partnerLogo.value="";
-}
-db.collection("partner").onSnapshot(s=>{
-  partnerList.innerHTML="";
-  s.forEach(d=>{
-    partnerList.innerHTML+=`
-    <div class="simple-item">
-      ${d.data().name}
-      <button class="btn-outline" onclick="db.collection('partner').doc('${d.id}').delete()">Delete</button>
-    </div>`;
+  if(!partnerName.value || !partnerLogo.files[0]) return alert("Fill all fields");
+  const img = await fileToBase64(partnerLogo.files[0]);
+  await db.collection("partner").add({
+    name: partnerName.value,
+    logo: img
   });
-});
+  partnerName.value=""; partnerLogo.value="";
+}
+
 </script>
 </body>
 </html>

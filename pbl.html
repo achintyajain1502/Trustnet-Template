@@ -418,6 +418,18 @@ body.sidebar-open .hero-banner {
 }
 
   </style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
+  authDomain: "trustnet-528c2.firebaseapp.com",
+  projectId: "trustnet-528c2"
+});
+const db = firebase.firestore();
+</script>
+
 </head>
 
 <body>
@@ -572,64 +584,59 @@ function toggleSidebar() {
 </script>
 
 <button id="backToTop" aria-label="Back to top"></button>
-
-</body>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script>
-firebase.initializeApp({
-  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
-  authDomain: "trustnet-528c2.firebaseapp.com",
-  projectId: "trustnet-528c2"
-});
-const db = firebase.firestore();
+window.onload = function () {
 
-/* IMPORTANT DATES */
-db.collection("dates").onSnapshot(s=>{
-  const box=document.querySelector(".date-box");
-  box.innerHTML="";
-  s.forEach(d=>{
-    box.innerHTML+=`
-      <div class="event-box">
-        <h2>${d.data().event}</h2>
-        <span>${d.data().date}</span>
-      </div>`;
+  /* IMPORTANT DATES */
+  db.collection("dates").onSnapshot(snapshot => {
+    const box = document.querySelector(".date-box");
+    box.innerHTML = "";
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      box.innerHTML += `
+        <div class="event-box">
+          <h2>${d.event}</h2>
+          <span>${d.date}</span>
+        </div>`;
+    });
   });
-});
 
-/* SPEAKERS */
-db.collection("speakers").onSnapshot(s=>{
-  const sp=document.querySelector(".speakers-container");
-  sp.innerHTML="";
-  s.forEach(d=>{
-    const s=d.data();
-    sp.innerHTML+=`
-      <div>
-        <img src="${s.image}">
-        <p><b>${s.name}</b><br>${s.affiliation}</p>
-      </div>`;
+  /* SPEAKERS */
+  db.collection("speakers").onSnapshot(snapshot => {
+    const sp = document.querySelector(".speakers-container");
+    sp.innerHTML = "";
+    snapshot.forEach(doc => {
+      const s = doc.data();
+      sp.innerHTML += `
+        <div>
+          <img src="${s.image}">
+          <p><b>${s.name}</b><br>${s.affiliation}</p>
+        </div>`;
+    });
   });
-});
 
-/* PUBLISHERS */
-db.collection("publishers").onSnapshot(s=>{
-  const p=document.getElementById("publisherLogos");
-  p.innerHTML="";
-  s.forEach(d=>{
-    p.innerHTML+=`<img src="${d.data().logo}">`;
+  /* PUBLISHERS */
+  db.collection("publishers").onSnapshot(snapshot => {
+    const p = document.getElementById("publisherLogos");
+    p.innerHTML = "";
+    snapshot.forEach(doc => {
+      p.innerHTML += `<img src="${doc.data().logo}">`;
+    });
   });
-});
 
-/* PARTNERS */
-db.collection("partner").onSnapshot(s=>{
-  const p=document.getElementById("partnerLogos");
-  p.innerHTML="";
-  s.forEach(d=>{
-    p.innerHTML+=`<img src="${d.data().logo}">`;
+  /* PARTNERS */
+  db.collection("partner").onSnapshot(snapshot => {
+    const p = document.getElementById("partnerLogos");
+    p.innerHTML = "";
+    snapshot.forEach(doc => {
+      p.innerHTML += `<img src="${doc.data().logo}">`;
+    });
   });
-});
+
+};
 </script>
 
+
+</body>
 
 </html>
