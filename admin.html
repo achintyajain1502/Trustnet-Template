@@ -7,363 +7,135 @@
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{margin:0;background:#eef1f6;padding:40px}
-
-/* HEADER */
-.top-header{
-  background:#fff;
-  height:80px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 40px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
-  margin:-40px -40px 40px -40px
-}
-.top-header h1{font-size:26px;font-weight:700}
-.logout{color:#2563EB;font-weight:700;text-decoration:none}
-
-/* GRID */
-.admin-grid{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:40px;
-}
-.full-width{grid-column:1/-1}
-
-/* CARD */
-.card{
-  background:#fff;
-  border-radius:16px;
-  padding:30px;
-  box-shadow:0 15px 40px rgba(0,0,0,.08);
-  min-height:420px;
-  display:flex;
-  flex-direction:column;
-}
-.card h2{
-  color:#2563EB;
-  font-size:26px;
-  margin:0
-}
-.hr{
-  border-bottom:1px solid #dbeafe;
-  margin:20px 0
-}
-
-/* FORM AREA */
-.card-body{
-  flex-grow:1;
-}
-
-/* INPUTS */
-label{font-weight:600;margin-top:15px;display:block}
-input{
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-  margin-bottom:14px;
-}
-
-/* BUTTONS */
-.btn{
-  background:#2563EB;
-  color:#fff;
-  border:none;
-  padding:10px 22px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer
-}
-.btn-outline{
-  background:#fff;
-  color:#111;
-  border:1px solid #111
-}
-
-/* LIST */
-.list-item{
-  display:grid;
-  grid-template-columns:1.5fr 200px auto;
-  gap:15px;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:1px solid #eee
-}
-.list-item input{padding:8px}
-
-/* SIMPLE LIST */
-.simple-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:1px solid #eee
-}
-.simple-name{font-weight:700}
-
-#backToTop {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 55px;
-  height: 55px;
-  background: url("uparrow.png") center center / cover no-repeat;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  display: none;
-  z-index: 999;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-  transition: transform 0.3s, opacity 0.3s ease;
-}
-
-#backToTop:hover {
-  transform: scale(1.1);
-  opacity: 0.85;
-}
-
+.card{background:#fff;border-radius:16px;padding:30px;box-shadow:0 15px 40px rgba(0,0,0,.08);margin-bottom:30px}
+h2{color:#2563EB}
+input,button{width:100%;padding:10px;margin:8px 0}
+button{background:#2563EB;color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer}
+.list{margin-top:20px}
+.item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #ddd}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="top-header">
-  <h1>TRUSTNET 2026 – Admin Dashboard</h1>
-  <a href="#" class="logout" onclick="logout();return false;">LOGOUT</a>
-</div>
+<h1>TRUSTNET 2026 – Admin Panel</h1>
 
-<div class="admin-grid">
-
-<!-- IMPORTANT DATES -->
 <div class="card">
-  <h2>Manage Important Dates</h2>
-  <div class="hr"></div>
-
-  <div class="card-body">
-    <input id="eventName" placeholder="Event Name">
-    <input id="eventDate" placeholder="Date">
-    <button type="button" class="btn" onclick="addDate()">Add Date</button>
-
-    <div class="hr"></div>
-    <div id="datesList"></div>
-  </div>
+  <h2>Add Speaker</h2>
+  <input id="spName" placeholder="Speaker Name">
+  <input id="spAff" placeholder="Affiliation">
+  <input type="file" id="spImg" accept="image/*">
+  <button onclick="addSpeaker()">Add Speaker</button>
+  <div class="list" id="speakerList"></div>
 </div>
 
-<!-- SPEAKERS -->
 <div class="card">
-  <h2>Manage Keynote Speakers</h2>
-  <div class="hr"></div>
-
-  <div class="card-body">
-    <label>Name</label>
-    <input id="spName">
-
-    <label>Affiliation</label>
-    <input id="spAff">
-
-    <label>Speaker Image</label>
-    <input type="file" id="spImg" accept="image/*">
-
-    <button type="button" class="btn" onclick="addSpeaker()">Add Speaker</button>
-
-    <div class="hr"></div>
-    <div id="speakerList"></div>
-  </div>
+  <h2>Add Publisher</h2>
+  <input id="pubName" placeholder="Publisher Name">
+  <input type="file" id="pubLogo" accept="image/*">
+  <button onclick="addPublisher()">Add Publisher</button>
+  <div class="list" id="publisherList"></div>
 </div>
 
-<!-- PUBLISHERS -->
-<div class="card full-width">
-  <h2>Manage Publisher Logos</h2>
-  <div class="hr"></div>
-
-  <div class="card-body">
-    <label>Publisher Name</label>
-    <input id="pubName">
-
-    <label>Logo Image</label>
-    <input type="file" id="pubLogo" accept="image/*">
-
-    <button type="button" class="btn" onclick="addPublisher()">Add Publisher</button>
-
-    <div class="hr"></div>
-    <div id="publisherList"></div>
-  </div>
+<div class="card">
+  <h2>Add Partner</h2>
+  <input id="partnerName" placeholder="Partner Name">
+  <input type="file" id="partnerLogo" accept="image/*">
+  <button onclick="addPartner()">Add Partner</button>
+  <div class="list" id="partnerList"></div>
 </div>
-
-<!-- PARTNER -->
-<div class="card full-width">
-  <h2>Manage Conference Partner</h2>
-  <div class="hr"></div>
-
-  <div class="card-body">
-    <label>Partner Name</label>
-    <input id="partnerName">
-
-    <label>Partner Logo</label>
-    <input type="file" id="partnerLogo" accept="image/*">
-
-    <button type="button" class="btn" onclick="addPartner()">Add Partner</button>
-
-    <div class="hr"></div>
-    <div id="partnerList"></div>
-  </div>
-</div>
-
-</div>
-<button id="backToTop" aria-label="Back to top"></button>
-
 
 <script>
 firebase.initializeApp({
   apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
   authDomain: "trustnet-528c2.firebaseapp.com",
-  projectId: "trustnet-528c2"
+  projectId: "trustnet-528c2",
+  storageBucket: "trustnet-528c2.appspot.com"
 });
 
 const db = firebase.firestore();
+const storage = firebase.storage();
 
-/* AUTH */
-if(sessionStorage.getItem("adminLoggedIn")!=="true"){
-  window.location.href="login.html";
-}
-function logout(){
-  sessionStorage.clear();
-  window.location.href="pbl.html";
-}
-
-/* ---------- HELPER ---------- */
-function fileToBase64(file){
-  return new Promise((resolve,reject)=>{
-    const reader=new FileReader();
-    reader.onload=()=>resolve(reader.result);
-    reader.onerror=reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-/* ---------- DATES ---------- */
-function addDate(){
-  const e=document.getElementById("eventName");
-  const d=document.getElementById("eventDate");
-  if(!e.value||!d.value) return alert("Fill all fields");
-
-  db.collection("dates").add({event:e.value,date:d.value});
-  e.value=""; d.value="";
-}
-
-db.collection("dates").onSnapshot(s=>{
-  datesList.innerHTML="";
-  s.forEach(doc=>{
-    const d=doc.data();
-    datesList.innerHTML+=`
-      <div class="list-item">
-        <strong>${d.event}</strong>
-        <input id="date-${doc.id}" value="${d.date}">
-        <div>
-          <button class="btn" onclick="updateDate('${doc.id}')">Update</button>
-          <button class="btn btn-outline" onclick="deleteDate('${doc.id}')">Delete</button>
-        </div>
-      </div>`;
-  });
-});
-function updateDate(id){
-  db.collection("dates").doc(id).update({
-    date:document.getElementById("date-"+id).value
-  });
-}
-function deleteDate(id){db.collection("dates").doc(id).delete();}
-
-/* ---------- SPEAKERS ---------- */
+/* SPEAKERS */
 async function addSpeaker(){
-  const n=spName.value,a=spAff.value,f=spImg.files[0];
+  const n=spName.value, a=spAff.value, f=spImg.files[0];
   if(!n||!a||!f) return alert("Fill all fields");
 
-  const img=await fileToBase64(f);
-  await db.collection("speakers").add({name:n,affiliation:a,image:img});
+  const ref = storage.ref(`speakers/${Date.now()}_${f.name}`);
+  await ref.put(f);
+  const url = await ref.getDownloadURL();
+
+  await db.collection("speakers").add({name:n, affiliation:a, image:url});
   spName.value=""; spAff.value=""; spImg.value="";
 }
 
 db.collection("speakers").onSnapshot(s=>{
   speakerList.innerHTML="";
-  s.forEach(doc=>{
+  s.forEach(d=>{
     speakerList.innerHTML+=`
-      <div class="simple-item">
-        <div class="simple-name">${doc.data().name}</div>
-        <button class="btn btn-outline" onclick="deleteSpeaker('${doc.id}')">Delete</button>
+      <div class="item">
+        ${d.data().name}
+        <button onclick="deleteDoc('speakers','${d.id}')">Delete</button>
       </div>`;
   });
 });
-function deleteSpeaker(id){db.collection("speakers").doc(id).delete();}
 
-/* ---------- PUBLISHERS ---------- */
+/* PUBLISHERS */
 async function addPublisher(){
-  const n=pubName.value,f=pubLogo.files[0];
+  const n=pubName.value, f=pubLogo.files[0];
   if(!n||!f) return alert("Fill all fields");
 
-  const img=await fileToBase64(f);
-  await db.collection("publishers").add({name:n,logo:img});
+  const ref = storage.ref(`publishers/${Date.now()}_${f.name}`);
+  await ref.put(f);
+  const url = await ref.getDownloadURL();
+
+  await db.collection("publishers").add({name:n, logo:url});
   pubName.value=""; pubLogo.value="";
 }
 
 db.collection("publishers").onSnapshot(s=>{
   publisherList.innerHTML="";
-  s.forEach(doc=>{
+  s.forEach(d=>{
     publisherList.innerHTML+=`
-      <div class="simple-item">
-        <div class="simple-name">${doc.data().name}</div>
-        <button class="btn btn-outline" onclick="deletePublisher('${doc.id}')">Delete</button>
+      <div class="item">
+        ${d.data().name}
+        <button onclick="deleteDoc('publishers','${d.id}')">Delete</button>
       </div>`;
   });
 });
-function deletePublisher(id){db.collection("publishers").doc(id).delete();}
 
-/* ---------- PARTNERS ---------- */
+/* PARTNERS */
 async function addPartner(){
-  const n=partnerName.value,f=partnerLogo.files[0];
+  const n=partnerName.value, f=partnerLogo.files[0];
   if(!n||!f) return alert("Fill all fields");
 
-  const img=await fileToBase64(f);
-  await db.collection("partner").add({name:n,logo:img});
+  const ref = storage.ref(`partners/${Date.now()}_${f.name}`);
+  await ref.put(f);
+  const url = await ref.getDownloadURL();
+
+  await db.collection("partner").add({name:n, logo:url});
   partnerName.value=""; partnerLogo.value="";
 }
 
 db.collection("partner").onSnapshot(s=>{
   partnerList.innerHTML="";
-  s.forEach(doc=>{
+  s.forEach(d=>{
     partnerList.innerHTML+=`
-      <div class="simple-item">
-        <div class="simple-name">${doc.data().name}</div>
-        <button class="btn btn-outline" onclick="deletePartner('${doc.id}')">Delete</button>
+      <div class="item">
+        ${d.data().name}
+        <button onclick="deleteDoc('partner','${d.id}')">Delete</button>
       </div>`;
   });
 });
-function deletePartner(id){db.collection("partner").doc(id).delete();}
 
-const backToTopBtn = document.getElementById("backToTop");
-
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      backToTopBtn.style.display = "block";
-    } else {
-      backToTopBtn.style.display = "none";
-    }
-  });
-
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-
+function deleteDoc(col,id){
+  db.collection(col).doc(id).delete();
+}
 </script>
 
 </body>

@@ -603,7 +603,19 @@ db.collection("dates").onSnapshot(snap=>{
   });
 });
 
-// Speakers
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
+  authDomain: "trustnet-528c2.firebaseapp.com",
+  projectId: "trustnet-528c2"
+});
+
+const db = firebase.firestore();
+
+/* SPEAKERS */
 db.collection("speakers").onSnapshot(snap=>{
   const sp=document.querySelector(".speakers-container");
   sp.innerHTML="";
@@ -611,42 +623,37 @@ db.collection("speakers").onSnapshot(snap=>{
     const s=doc.data();
     sp.innerHTML+=`
       <div>
-        <img src="${s.image}">
+        <img src="${s.image}" alt="${s.name}" onerror="this.style.display='none'">
         <p><b>${s.name}</b><br>${s.affiliation}</p>
       </div>`;
   });
 });
-</script>
 
-
-<script>
-// Publishers
+/* PUBLISHERS */
 db.collection("publishers").onSnapshot(snap=>{
-  const pub = document.getElementById("publisherLogos");
-  pub.innerHTML = "";
+  const pub=document.getElementById("publisherLogos");
+  pub.innerHTML="";
   snap.forEach(doc=>{
-    const p = doc.data();
-    pub.innerHTML += `
+    const p=doc.data();
+    pub.innerHTML+=`
       <img src="${p.logo}" alt="${p.name}">
     `;
   });
 });
-</script>
 
-
-<script>
-// Partner
+/* PARTNERS */
 db.collection("partner").onSnapshot(snap=>{
-  const pub = document.getElementById("partnerLogos");
-  pub.innerHTML = "";
+  const part=document.getElementById("partnerLogos");
+  part.innerHTML="";
   snap.forEach(doc=>{
-    const p = doc.data();
-    pub.innerHTML += `
+    const p=doc.data();
+    part.innerHTML+=`
       <img src="${p.logo}" alt="${p.name}">
     `;
   });
 });
 </script>
+
 
 
 <script>
