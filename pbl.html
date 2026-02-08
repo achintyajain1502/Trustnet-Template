@@ -574,35 +574,6 @@ function toggleSidebar() {
 <button id="backToTop" aria-label="Back to top"></button>
 
 </body>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyAZ4sNmHzS6s76eB9O5sa8gvah3n7cXEUQ",
-  authDomain: "trustnet-528c2.firebaseapp.com",
-  projectId: "trustnet-528c2",
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Important Dates
-db.collection("dates").onSnapshot(snap=>{
-  const dateBox=document.querySelector(".date-box");
-  dateBox.innerHTML="";
-  snap.forEach(doc=>{
-    const d=doc.data();
-    dateBox.innerHTML+=`
-      <div class="event-box">
-        <h2>${d.event}</h2>
-        <span>${d.date}</span>
-      </div>`;
-  });
-});
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -612,67 +583,53 @@ firebase.initializeApp({
   authDomain: "trustnet-528c2.firebaseapp.com",
   projectId: "trustnet-528c2"
 });
-
 const db = firebase.firestore();
 
+/* IMPORTANT DATES */
+db.collection("dates").onSnapshot(s=>{
+  const box=document.querySelector(".date-box");
+  box.innerHTML="";
+  s.forEach(d=>{
+    box.innerHTML+=`
+      <div class="event-box">
+        <h2>${d.data().event}</h2>
+        <span>${d.data().date}</span>
+      </div>`;
+  });
+});
+
 /* SPEAKERS */
-db.collection("speakers").onSnapshot(snap=>{
+db.collection("speakers").onSnapshot(s=>{
   const sp=document.querySelector(".speakers-container");
   sp.innerHTML="";
-  snap.forEach(doc=>{
-    const s=doc.data();
+  s.forEach(d=>{
+    const s=d.data();
     sp.innerHTML+=`
       <div>
-        <img src="${s.image}" alt="${s.name}" onerror="this.style.display='none'">
+        <img src="${s.image}">
         <p><b>${s.name}</b><br>${s.affiliation}</p>
       </div>`;
   });
 });
 
 /* PUBLISHERS */
-db.collection("publishers").onSnapshot(snap=>{
-  const pub=document.getElementById("publisherLogos");
-  pub.innerHTML="";
-  snap.forEach(doc=>{
-    const p=doc.data();
-    pub.innerHTML+=`
-      <img src="${p.logo}" alt="${p.name}">
-    `;
+db.collection("publishers").onSnapshot(s=>{
+  const p=document.getElementById("publisherLogos");
+  p.innerHTML="";
+  s.forEach(d=>{
+    p.innerHTML+=`<img src="${d.data().logo}">`;
   });
 });
 
 /* PARTNERS */
-db.collection("partner").onSnapshot(snap=>{
-  const part=document.getElementById("partnerLogos");
-  part.innerHTML="";
-  snap.forEach(doc=>{
-    const p=doc.data();
-    part.innerHTML+=`
-      <img src="${p.logo}" alt="${p.name}">
-    `;
+db.collection("partner").onSnapshot(s=>{
+  const p=document.getElementById("partnerLogos");
+  p.innerHTML="";
+  s.forEach(d=>{
+    p.innerHTML+=`<img src="${d.data().logo}">`;
   });
 });
 </script>
 
-
-
-<script>
-  const backToTopBtn = document.getElementById("backToTop");
-
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop > 300) {
-      backToTopBtn.style.display = "block";
-    } else {
-      backToTopBtn.style.display = "none";
-    }
-  });
-
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  });
-</script>
 
 </html>
