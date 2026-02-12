@@ -8,7 +8,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
-
 <style>
 *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
 body{margin:0;background:#eef1f6;padding:40px}
@@ -87,11 +86,13 @@ input{width:100%;padding:12px;margin-bottom:12px;border-radius:10px;border:1px s
 </div>
 
 <script>
+
+/* ✅ CORRECT STORAGE BUCKET */
 const firebaseConfig = {
   apiKey: "AIzaSyC5Uq-o4ztdm5XPKmSXseqI7shiJBTpevA",
   authDomain: "trustnet-1-eac5e.firebaseapp.com",
   projectId: "trustnet-1-eac5e",
-  storageBucket: "trustnet-1-eac5e.firebasestorage.app",
+  storageBucket: "trustnet-1-eac5e.appspot.com",
   messagingSenderId: "1004870765771",
   appId: "1:1004870765771:web:e32b513a5beaf0cd7e1f4e"
 };
@@ -105,6 +106,7 @@ const storage = firebase.storage();
 if(sessionStorage.getItem("adminLoggedIn")!=="true"){
   location.href="login.html";
 }
+
 function logout(){
   sessionStorage.clear();
   location.href="pbl.html";
@@ -114,17 +116,23 @@ function logout(){
 /* IMPORTANT DATES */
 /* ========================= */
 
-function addDate(){
-  if(!eventName.value || !eventDate.value)
-    return alert("Fill all fields");
+async function addDate(){
+  try{
+    if(!eventName.value || !eventDate.value)
+      return alert("Fill all fields");
 
-  db.collection("dates").add({
-    event:eventName.value,
-    date:eventDate.value
-  });
+    await db.collection("dates").add({
+      event:eventName.value,
+      date:eventDate.value
+    });
 
-  eventName.value="";
-  eventDate.value="";
+    alert("Date Added Successfully");
+    eventName.value="";
+    eventDate.value="";
+  }catch(error){
+    console.error(error);
+    alert(error.message);
+  }
 }
 
 db.collection("dates").onSnapshot(s=>{
@@ -134,89 +142,46 @@ db.collection("dates").onSnapshot(s=>{
     <div class="simple-item">
       ${d.data().event} – ${d.data().date}
       <button class="btn-outline"
-      onclick="db.collection('dates').doc('${d.id}').delete()">Delete</button>
+      onclick="deleteDate('${d.id}')">Delete</button>
     </div>`;
   });
 });
 
+function deleteDate(id){
+  db.collection("dates").doc(id).delete();
+}
 
 /* ========================= */
 /* SPEAKERS */
 /* ========================= */
 
 async function addSpeaker(){
-  if(!spName.value || !spAff.value || !spImg.files[0])
-    return alert("Fill all fields");
+  try{
+    if(!spName.value || !spAff.value || !spImg.files[0])
+      return alert("Fill all fields");
 
-  const file = spImg.files[0];
-  const ref = storage.ref("speakers/" + Date.now() + "_" + file.name);
+    const file = spImg.files[0];
+    const ref = storage.ref("speakers/" + Date.now() + "_" + file.name);
 
-  await ref.put(file);
-  const url = await ref.getDownloadURL();
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
 
-  await db.collection("speakers").add({
-    name: spName.value,
-    affiliation: spAff.value,
-    image: url
-  });
+    await db.collection("speakers").add({
+      name: spName.value,
+      affiliation: spAff.value,
+      image: url
+    });
 
-  spName.value="";
-  spAff.value="";
-  spImg.value="";
+    alert("Speaker Added Successfully");
+
+    spName.value="";
+    spAff.value="";
+    spImg.value="";
+  }catch(error){
+    console.error(error);
+    alert(error.message);
+  }
 }
-
-
-/* ========================= */
-/* PUBLISHERS */
-/* ========================= */
-
-async function addPublisher(){
-  if(!pubName.value || !pubLogo.files[0])
-    return alert("Fill all fields");
-
-  const file = pubLogo.files[0];
-  const ref = storage.ref("publishers/" + Date.now() + "_" + file.name);
-
-  await ref.put(file);
-  const url = await ref.getDownloadURL();
-
-  await db.collection("publishers").add({
-    name: pubName.value,
-    logo: url
-  });
-
-  pubName.value="";
-  pubLogo.value="";
-}
-
-
-/* ========================= */
-/* PARTNERS */
-/* ========================= */
-
-async function addPartner(){
-  if(!partnerName.value || !partnerLogo.files[0])
-    return alert("Fill all fields");
-
-  const file = partnerLogo.files[0];
-  const ref = storage.ref("partners/" + Date.now() + "_" + file.name);
-
-  await ref.put(file);
-  const url = await ref.getDownloadURL();
-
-  await db.collection("partners").add({   // ✅ FIXED (was "partner")
-    name: partnerName.value,
-    logo: url
-  });
-
-  partnerName.value="";
-  partnerLogo.value="";
-}
-
-
-/* ========================= */
-/* LIVE LISTENERS */
-/* ========================= */
 
 db.collection("speakers").onSnapshot(s=>{
   speakerList.innerHTML="";
@@ -225,10 +190,44 @@ db.collection("speakers").onSnapshot(s=>{
     <div class="simple-item">
       ${d.data().name}
       <button class="btn-outline"
-      onclick="db.collection('speakers').doc('${d.id}').delete()">Delete</button>
+      onclick="deleteSpeaker('${d.id}')">Delete</button>
     </div>`;
   });
 });
+
+function deleteSpeaker(id){
+  db.collection("speakers").doc(id).delete();
+}
+
+/* ========================= */
+/* PUBLISHERS */
+/* ========================= */
+
+async function addPublisher(){
+  try{
+    if(!pubName.value || !pubLogo.files[0])
+      return alert("Fill all fields");
+
+    const file = pubLogo.files[0];
+    const ref = storage.ref("publishers/" + Date.now() + "_" + file.name);
+
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+
+    await db.collection("publishers").add({
+      name: pubName.value,
+      logo: url
+    });
+
+    alert("Publisher Added Successfully");
+
+    pubName.value="";
+    pubLogo.value="";
+  }catch(error){
+    console.error(error);
+    alert(error.message);
+  }
+}
 
 db.collection("publishers").onSnapshot(s=>{
   publisherList.innerHTML="";
@@ -237,10 +236,44 @@ db.collection("publishers").onSnapshot(s=>{
     <div class="simple-item">
       ${d.data().name}
       <button class="btn-outline"
-      onclick="db.collection('publishers').doc('${d.id}').delete()">Delete</button>
+      onclick="deletePublisher('${d.id}')">Delete</button>
     </div>`;
   });
 });
+
+function deletePublisher(id){
+  db.collection("publishers").doc(id).delete();
+}
+
+/* ========================= */
+/* PARTNERS */
+/* ========================= */
+
+async function addPartner(){
+  try{
+    if(!partnerName.value || !partnerLogo.files[0])
+      return alert("Fill all fields");
+
+    const file = partnerLogo.files[0];
+    const ref = storage.ref("partners/" + Date.now() + "_" + file.name);
+
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+
+    await db.collection("partners").add({
+      name: partnerName.value,
+      logo: url
+    });
+
+    alert("Partner Added Successfully");
+
+    partnerName.value="";
+    partnerLogo.value="";
+  }catch(error){
+    console.error(error);
+    alert(error.message);
+  }
+}
 
 db.collection("partners").onSnapshot(s=>{
   partnerList.innerHTML="";
@@ -249,10 +282,14 @@ db.collection("partners").onSnapshot(s=>{
     <div class="simple-item">
       ${d.data().name}
       <button class="btn-outline"
-      onclick="db.collection('partners').doc('${d.id}').delete()">Delete</button>
+      onclick="deletePartner('${d.id}')">Delete</button>
     </div>`;
   });
 });
+
+function deletePartner(id){
+  db.collection("partners").doc(id).delete();
+}
 
 </script>
 
